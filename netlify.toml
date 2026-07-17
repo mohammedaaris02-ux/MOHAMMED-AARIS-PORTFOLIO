@@ -1,0 +1,12 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/mohammedaarisportfolio"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/mohammedaarisportfolio/*"
+  to = "/:splat"
+  status = 200

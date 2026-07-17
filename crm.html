@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaFlow CRM | Admin Panel Dashboard</title>
+  <link rel="icon" type="image/jpeg" href="../assets/hma-favicon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fff5f8;
+      --panel: #ffffff;
+      --panel-2: #fff0c9;
+      --text: #2f2633;
+      --muted: #756b7a;
+      --cyan: #d9467d;
+      --lime: #e2b93b;
+      --violet: #5f6f52;
+      --orange: #c44569;
+      --line: rgba(47, 38, 51, 0.12);
+      --shadow: 0 28px 80px rgba(196, 69, 105, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 15% 12%, rgba(217, 70, 125, 0.18), transparent 26rem),
+        radial-gradient(circle at 84% 18%, rgba(226, 185, 59, 0.22), transparent 28rem),
+        linear-gradient(118deg, transparent 0 18%, rgba(255, 255, 255, 0.58) 18% 30%, transparent 30% 100%),
+        linear-gradient(155deg, #fff7d8 0 20%, #fff5f8 20% 62%, #f7f2ff 62% 100%);
+      background-size: auto;
+      color: var(--text);
+      font-family: Jost, system-ui, sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(135deg, transparent 0 72%, rgba(217, 70, 125, 0.08) 72% 100%),
+        radial-gradient(circle at 92% 82%, rgba(95, 111, 82, 0.13), transparent 24rem);
+      pointer-events: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(1220px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 245, 248, 0.84);
+      padding: 16px max(16px, calc((100% - 1220px) / 2));
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(217, 70, 125, 0.3);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(217, 70, 125, 0.16), rgba(226, 185, 59, 0.2));
+      color: #8f244e;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-links a,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.62);
+      color: var(--text);
+      padding: 0 16px;
+      font-weight: 900;
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .nav-links a:hover,
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(217, 70, 125, 0.34);
+      background: #ffffff;
+      box-shadow: 0 18px 42px rgba(217, 70, 125, 0.13);
+    }
+
+    .btn.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--cyan), var(--lime));
+      color: #ffffff;
+    }
+
+    .btn:active {
+      transform: translateY(0) scale(0.97);
+      background: linear-gradient(135deg, #9d174d, #856404);
+      color: #ffffff;
+    }
+
+    .section {
+      padding: 74px 0;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.88fr) minmax(420px, 1.12fr);
+      gap: 38px;
+      align-items: center;
+      min-height: calc(100vh - 76px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 16px;
+      color: #9d174d;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--lime));
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: clamp(3.3rem, 7vw, 6.4rem);
+      line-height: 0.95;
+    }
+
+    h2 {
+      font-size: clamp(2.1rem, 4vw, 4rem);
+      line-height: 1.02;
+    }
+
+    .lead {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .dashboard {
+      overflow: hidden;
+      border: 1px solid rgba(217, 70, 125, 0.16);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(255, 240, 201, 0.72)), var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .dashboard-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      padding: 16px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .window-dots span {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--cyan);
+    }
+
+    .window-dots span:nth-child(2) {
+      background: var(--lime);
+    }
+
+    .window-dots span:nth-child(3) {
+      background: #5f6f52;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      min-height: 560px;
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--line);
+      background: rgba(255, 240, 201, 0.58);
+      padding: 18px;
+    }
+
+    .side-link {
+      display: block;
+      border-radius: 14px;
+      color: var(--muted);
+      font-weight: 900;
+      padding: 12px;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .side-link:hover,
+    .side-link.active {
+      transform: translateX(4px);
+      background: rgba(217, 70, 125, 0.12);
+      color: var(--text);
+    }
+
+    .admin-main {
+      display: grid;
+      gap: 16px;
+      padding: 18px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric,
+    .panel,
+    .module-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+      transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .metric:hover,
+    .panel:hover,
+    .module-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(217, 70, 125, 0.28);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(255, 247, 216, 0.72));
+      box-shadow: 0 24px 60px rgba(196, 69, 105, 0.12);
+    }
+
+    .metric {
+      padding: 16px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 1.7rem;
+    }
+
+    .metric small {
+      color: #5f6f52;
+      font-weight: 900;
+    }
+
+    .dashboard-row {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 16px;
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    .chart {
+      display: flex;
+      align-items: end;
+      gap: 12px;
+      height: 180px;
+      margin-top: 20px;
+    }
+
+    .bar {
+      flex: 1;
+      border-radius: 999px 999px 12px 12px;
+      background: linear-gradient(180deg, var(--cyan), var(--lime));
+      min-height: 34px;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .bar:hover {
+      transform: scaleY(1.06);
+      filter: brightness(1.18);
+    }
+
+    .pipeline {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pipeline-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--muted);
+      padding: 12px;
+      font-weight: 900;
+    }
+
+    .pipeline-item strong {
+      color: var(--text);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .module-card {
+      min-height: 230px;
+      padding: 22px;
+    }
+
+    .module-icon {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(217, 70, 125, 0.14), rgba(226, 185, 59, 0.18));
+      color: #8f244e;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .module-card h3,
+    .panel h3 {
+      margin: 0 0 10px;
+    }
+
+    .module-card p,
+    .panel p {
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .table-wrap {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 16px;
+      text-align: left;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    td {
+      color: #334155;
+      font-weight: 800;
+    }
+
+    tr:hover td {
+      background: rgba(217, 70, 125, 0.08);
+    }
+
+    .status {
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .hot {
+      background: rgba(217, 70, 125, 0.14);
+      color: var(--orange);
+    }
+
+    .won {
+      background: rgba(95, 111, 82, 0.14);
+      color: var(--cyan);
+    }
+
+    .new {
+      background: rgba(226, 185, 59, 0.18);
+      color: var(--violet);
+    }
+
+    .roles {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .role-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+      padding: 18px;
+      transition: transform 0.22s ease, background 0.22s ease;
+    }
+
+    .role-card:hover {
+      transform: translateY(-6px);
+      background: rgba(217, 70, 125, 0.09);
+    }
+
+    .role-card strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .role-card span {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .cta {
+      border: 1px solid rgba(217, 70, 125, 0.14);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(217, 70, 125, 0.16), transparent 18rem),
+        radial-gradient(circle at 90% 15%, rgba(226, 185, 59, 0.2), transparent 18rem),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 245, 248, 0.9));
+      background-position: center;
+      background-size: cover;
+      padding: clamp(34px, 7vw, 68px);
+      box-shadow: var(--shadow);
+    }
+
+    .cta h2 {
+      max-width: 820px;
+      color: var(--text);
+    }
+
+    .cta .lead {
+      color: var(--muted);
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      padding: 32px 0 44px;
+      font-weight: 800;
+    }
+
+    .back-top {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .back-top:hover {
+      transform: translateY(-3px);
+      background: linear-gradient(135deg, var(--cyan), var(--lime));
+      color: #ffffff;
+    }
+
+    @media (max-width: 960px) {
+      .hero,
+      .dashboard-row,
+      .module-grid,
+      .roles {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: flex;
+        flex-wrap: wrap;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav,
+      .section-head,
+      .footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="../index.html#projects"><span class="brand-mark">NF</span> NexaFlow CRM</a>
+    <div class="nav-links">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#modules">Modules</a>
+      <a href="#leads">Leads</a>
+      <a href="#roles">Roles</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <main class="shell">
+    <section class="hero section">
+      <div>
+        <p class="eyebrow">Premium CRM Admin Panel</p>
+        <h1>Business control panel for sales, leads and operations.</h1>
+        <p class="lead">NexaFlow CRM is a sample company admin dashboard for managing leads, customers, invoices, sales pipeline, employee tasks, roles, reports, and daily business activity in one place.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#dashboard">View Dashboard</a>
+          <a class="btn" href="#modules">CRM Features</a>
+        </div>
+      </div>
+
+      <article class="dashboard" id="dashboard">
+        <div class="dashboard-top">
+          <div class="window-dots"><span></span><span></span><span></span></div>
+          <strong>Admin Panel</strong>
+        </div>
+        <div class="dashboard-grid">
+          <aside class="sidebar">
+            <a class="side-link active" href="#dashboard">Overview</a>
+            <a class="side-link" href="#leads">Leads</a>
+            <a class="side-link" href="#modules">Customers</a>
+            <a class="side-link" href="#roles">Team</a>
+            <a class="side-link" href="#contact">Reports</a>
+          </aside>
+          <div class="admin-main">
+            <div class="metric-grid">
+              <div class="metric"><span>Total Revenue</span><strong>Rs. 12.8L</strong><small>+18%</small></div>
+              <div class="metric"><span>New Leads</span><strong>248</strong><small>+34</small></div>
+              <div class="metric"><span>Active Clients</span><strong>86</strong><small>Live</small></div>
+              <div class="metric"><span>Open Tasks</span><strong>42</strong><small>Today</small></div>
+            </div>
+            <div class="dashboard-row">
+              <div class="panel">
+                <h3>Sales Analytics</h3>
+                <p>Monthly pipeline performance, conversion value, and revenue progress.</p>
+                <div class="chart">
+                  <span class="bar" style="height: 42%"></span>
+                  <span class="bar" style="height: 64%"></span>
+                  <span class="bar" style="height: 58%"></span>
+                  <span class="bar" style="height: 78%"></span>
+                  <span class="bar" style="height: 70%"></span>
+                  <span class="bar" style="height: 92%"></span>
+                </div>
+              </div>
+              <div class="panel">
+                <h3>Pipeline</h3>
+                <p>Deal stages and lead quality at a glance.</p>
+                <div class="pipeline">
+                  <div class="pipeline-item"><span>New enquiry</span><strong>68</strong></div>
+                  <div class="pipeline-item"><span>Proposal sent</span><strong>31</strong></div>
+                  <div class="pipeline-item"><span>Negotiation</span><strong>18</strong></div>
+                  <div class="pipeline-item"><span>Won clients</span><strong>12</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" id="modules">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">What CRM Site Includes</p>
+          <h2>Admin modules for real business work.</h2>
+        </div>
+        <a class="btn" href="#leads">View Lead Table</a>
+      </div>
+      <div class="module-grid">
+        <article class="module-card">
+          <div class="module-icon">01</div>
+          <h3>Lead Management</h3>
+          <p>Capture enquiries, assign follow-ups, track lead status, store notes, and monitor conversion stages.</p>
+        </article>
+        <article class="module-card">
+          <div class="module-icon">02</div>
+          <h3>Customer Records</h3>
+          <p>Manage company profiles, contact details, project history, invoices, support status, and activity logs.</p>
+        </article>
+        <article class="module-card">
+          <div class="module-icon">03</div>
+          <h3>Sales Pipeline</h3>
+          <p>Track proposal value, deal stage, expected close date, sales owner, and won/lost business reports.</p>
+        </article>
+        <article class="module-card">
+          <div class="module-icon">04</div>
+          <h3>Invoice & Payments</h3>
+          <p>Create invoice records, check pending payments, update paid status, and review monthly revenue.</p>
+        </article>
+        <article class="module-card">
+          <div class="module-icon">05</div>
+          <h3>Task Management</h3>
+          <p>Assign work to employees, set deadlines, track progress, and review daily team activity.</p>
+        </article>
+        <article class="module-card">
+          <div class="module-icon">06</div>
+          <h3>Reports Dashboard</h3>
+          <p>View charts for revenue, leads, customers, tasks, employee performance, and monthly growth.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="leads">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Live Admin View</p>
+          <h2>Leads and customer table.</h2>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Contact</th>
+              <th>Requirement</th>
+              <th>Owner</th>
+              <th>Value</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>BrightMart Retail</td>
+              <td>Priya S</td>
+              <td>E-commerce CRM</td>
+              <td>Sales Team</td>
+              <td>Rs. 2.4L</td>
+              <td><span class="status hot">Hot Lead</span></td>
+            </tr>
+            <tr>
+              <td>Nova Interiors</td>
+              <td>Arun K</td>
+              <td>Client Portal</td>
+              <td>Admin</td>
+              <td>Rs. 1.8L</td>
+              <td><span class="status new">Proposal</span></td>
+            </tr>
+            <tr>
+              <td>Metro Logistics</td>
+              <td>Ramesh P</td>
+              <td>ERP Dashboard</td>
+              <td>Operations</td>
+              <td>Rs. 4.1L</td>
+              <td><span class="status won">Won</span></td>
+            </tr>
+            <tr>
+              <td>SkillHub Academy</td>
+              <td>Neha M</td>
+              <td>Student CRM</td>
+              <td>HR Team</td>
+              <td>Rs. 1.2L</td>
+              <td><span class="status hot">Follow-up</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="roles">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Admin Roles</p>
+          <h2>Controlled access for every team.</h2>
+        </div>
+      </div>
+      <div class="roles">
+        <article class="role-card"><strong>Super Admin</strong><span>Full access, reports, users, settings.</span></article>
+        <article class="role-card"><strong>Sales Manager</strong><span>Leads, deals, follow-ups, proposals.</span></article>
+        <article class="role-card"><strong>HR Team</strong><span>Employees, tasks, attendance, notes.</span></article>
+        <article class="role-card"><strong>Support Staff</strong><span>Tickets, customer records, updates.</span></article>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="cta">
+        <p class="eyebrow">Build CRM System</p>
+        <h2>Need a CRM admin panel for your company?</h2>
+        <p class="lead">Build a premium CRM site with admin dashboard, customer records, lead pipeline, invoices, roles, reports, and secure business workflow.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="../index.html#contact">Contact Mohammed Aaris</a>
+          <a class="btn" href="#dashboard">View Dashboard</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>&copy; 2026 NexaFlow CRM. Admin panel concept.</span>
+      <a class="back-top" href="#">Back to top ↑</a>
+    </footer>
+  </main>
+</body>
+</html>

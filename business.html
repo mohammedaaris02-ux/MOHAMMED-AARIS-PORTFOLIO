@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApexBridge Consulting | Corporate Business Website</title>
+  <link rel="icon" type="image/jpeg" href="../assets/hma-favicon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #151719;
+      --muted: #68717b;
+      --paper: #ffffff;
+      --ivory: #f5f1e7;
+      --navy: #151719;
+      --gold: #c9a646;
+      --teal: #0f766e;
+      --line: rgba(21, 23, 25, 0.12);
+      --shadow: 0 30px 90px rgba(15, 118, 110, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(128deg, transparent 0 16%, rgba(15, 118, 110, 0.08) 16% 29%, transparent 29% 100%),
+        linear-gradient(42deg, transparent 0 62%, rgba(201, 166, 70, 0.14) 62% 76%, transparent 76% 100%),
+        radial-gradient(circle at 8% 10%, rgba(15, 118, 110, 0.14), transparent 28rem),
+        radial-gradient(circle at 90% 18%, rgba(201, 166, 70, 0.16), transparent 30rem),
+        linear-gradient(160deg, #f5f1e7 0 34%, #f9faf8 34% 68%, #eef7f4 68% 100%);
+      color: var(--ink);
+      font-family: Jost, system-ui, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .top-bar {
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 800;
+      padding: 10px max(16px, calc((100% - 1200px) / 2));
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(245, 241, 231, 0.88);
+      padding: 16px max(16px, calc((100% - 1200px) / 2));
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: #fff8e8;
+      letter-spacing: -0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-links a,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.66);
+      color: var(--ink);
+      padding: 0 16px;
+      font-weight: 900;
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, color 0.22s ease;
+    }
+
+    .nav-links a:hover,
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(15, 118, 110, 0.4);
+      background: #ffffff;
+      color: var(--gold);
+      box-shadow: 0 16px 40px rgba(15, 118, 110, 0.12);
+    }
+
+    .btn.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, #151719, #0f766e);
+      color: #ffffff;
+    }
+
+    .btn.primary:hover {
+      color: #ffffff;
+      background: linear-gradient(135deg, #0f766e, #c9a646);
+    }
+
+    .btn:active {
+      transform: translateY(0) scale(0.98);
+      background: var(--navy);
+      color: #ffffff;
+    }
+
+    .section {
+      padding: 78px 0;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+      gap: 42px;
+      align-items: center;
+      min-height: calc(100vh - 108px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 16px;
+      color: var(--gold);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--teal));
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 6.8vw, 6.2rem);
+      line-height: 0.94;
+    }
+
+    h2 {
+      font-size: clamp(2.1rem, 4.4vw, 4.2rem);
+      line-height: 1.02;
+    }
+
+    .lead {
+      max-width: 660px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.78;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .hero-visual {
+      overflow: hidden;
+      border: 1px solid rgba(15, 118, 110, 0.12);
+      border-radius: 14px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .hero-visual:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 34px 90px rgba(15, 118, 110, 0.18);
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.5s ease;
+    }
+
+    .hero-visual:hover img {
+      transform: scale(1.04);
+      filter: saturate(1.06) contrast(1.04);
+    }
+
+    .visual-caption {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 22px;
+    }
+
+    .visual-caption strong {
+      font-size: 1.2rem;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .metric,
+    .card,
+    .case-card,
+    .testimonial,
+    .contact-panel {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 20px 60px rgba(15, 118, 110, 0.08);
+      transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .metric {
+      padding: 18px;
+    }
+
+    .metric:hover,
+    .card:hover,
+    .case-card:hover,
+    .testimonial:hover,
+    .contact-panel:hover {
+      transform: translateY(-7px);
+      border-color: rgba(15, 118, 110, 0.34);
+      background: #ffffff;
+      box-shadow: 0 28px 70px rgba(15, 118, 110, 0.14);
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--navy);
+      font-size: 1.8rem;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      padding: 24px;
+    }
+
+    .card-number {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      background: rgba(201, 166, 70, 0.14);
+      color: var(--gold);
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .card h3,
+    .case-card h3,
+    .testimonial h3,
+    .contact-panel h3 {
+      margin: 0 0 10px;
+    }
+
+    .card p,
+    .case-card p,
+    .testimonial p,
+    .contact-panel p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .about-photo {
+      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .about-photo img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 12;
+      object-fit: cover;
+    }
+
+    .case-card {
+      overflow: hidden;
+    }
+
+    .case-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .case-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .case-body {
+      padding: 22px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tags span {
+      border: 1px solid rgba(15, 118, 110, 0.18);
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--teal);
+      padding: 7px 10px;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .process {
+      counter-reset: process;
+      display: grid;
+      gap: 14px;
+    }
+
+    .process-item {
+      counter-increment: process;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.78);
+      padding: 18px;
+      transition: transform 0.22s ease, background 0.22s ease;
+    }
+
+    .process-item:hover {
+      transform: translateX(8px);
+      background: #ffffff;
+    }
+
+    .process-item::before {
+      content: counter(process);
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    .testimonial {
+      padding: 24px;
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 18px;
+      color: var(--navy);
+    }
+
+    .contact-section {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .contact-panel {
+      padding: 26px;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .contact-list div {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+      font-weight: 900;
+    }
+
+    .contact-list span {
+      color: var(--muted);
+    }
+
+    .cta-box {
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(21, 23, 25, 0.88), rgba(15, 118, 110, 0.66)),
+        url("https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80");
+      background-blend-mode: multiply;
+      background-position: center;
+      background-size: cover;
+      color: #ffffff;
+      padding: clamp(32px, 6vw, 64px);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box .lead {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .footer {
+      margin-top: 40px;
+      border-top: 1px solid var(--line);
+      padding: 32px 0 44px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.75fr 0.75fr 1fr;
+      gap: 26px;
+      margin-bottom: 28px;
+    }
+
+    .footer h3,
+    .footer strong {
+      color: var(--navy);
+      margin: 0 0 12px;
+    }
+
+    .footer p,
+    .footer a {
+      color: var(--muted);
+      line-height: 1.7;
+      font-weight: 800;
+    }
+
+    .footer a {
+      display: block;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .footer a:hover {
+      color: var(--gold);
+      transform: translateX(4px);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .back-top {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 9px 14px;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .split,
+      .contact-section,
+      .grid-3,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav,
+      .section-head,
+      .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .metric-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .metric-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">ApexBridge Consulting • Strategy, operations and digital growth support</div>
+  <nav class="nav">
+    <a class="brand" href="../index.html#projects"><span class="brand-mark">AB</span> ApexBridge</a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#case-studies">Case Studies</a>
+      <a href="#contact">Contact</a>
+      <a class="btn primary" href="#contact">Book Consultation</a>
+    </div>
+  </nav>
+
+  <main class="shell">
+    <section class="hero section">
+      <div>
+        <p class="eyebrow">Corporate Business Website</p>
+        <h1>Grow your company with clear strategy and digital presence.</h1>
+        <p class="lead">ApexBridge Consulting is a premium business website concept for companies that want strong service presentation, trust-building sections, case studies, testimonials and enquiry-focused lead generation.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#services">Explore Services</a>
+          <a class="btn" href="#case-studies">View Results</a>
+        </div>
+        <div class="metric-row">
+          <div class="metric"><strong>12+</strong><span>Industries served</span></div>
+          <div class="metric"><strong>86%</strong><span>Lead clarity boost</span></div>
+          <div class="metric"><strong>42</strong><span>Business projects</span></div>
+          <div class="metric"><strong>24/7</strong><span>Enquiry flow</span></div>
+        </div>
+      </div>
+      <article class="hero-visual">
+        <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1200&q=80" alt="Corporate business consulting team meeting">
+        <div class="visual-caption">
+          <strong>Business-ready website structure</strong>
+          <a class="btn" href="#contact">Start Project</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" id="services">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Services</p>
+          <h2>Corporate sections clients expect.</h2>
+        </div>
+        <a class="btn" href="#contact">Request Website</a>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <div class="card-number">01</div>
+          <h3>Business Website</h3>
+          <p>Homepage, about company, service pages, enquiry CTA, trust content and professional layout.</p>
+        </article>
+        <article class="card">
+          <div class="card-number">02</div>
+          <h3>Lead Generation</h3>
+          <p>Contact forms, WhatsApp actions, phone/email sections, strong CTA blocks and conversion flow.</p>
+        </article>
+        <article class="card">
+          <div class="card-number">03</div>
+          <h3>Brand Credibility</h3>
+          <p>Case studies, metrics, testimonials, process section, client logos and polished content hierarchy.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split" id="about">
+      <div class="about-photo">
+        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1100&q=80" alt="Business team planning corporate growth">
+      </div>
+      <div>
+        <p class="eyebrow">About Company</p>
+        <h2>Built for trust, clarity and enquiries.</h2>
+        <p class="lead">A premium corporate website helps clients understand what the company does, why it is reliable and how to contact the team. The page structure is planned for scanning, service comparison and quick decision-making.</p>
+        <div class="process">
+          <div class="process-item"><div><strong>Discovery</strong><p class="lead">Understand business, audience, services and enquiry goals.</p></div></div>
+          <div class="process-item"><div><strong>Content Flow</strong><p class="lead">Arrange hero, services, proof, testimonials and CTA sections.</p></div></div>
+          <div class="process-item"><div><strong>Launch Ready</strong><p class="lead">Responsive website with contact actions, SEO basics and hosting setup.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="case-studies">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Case Studies</p>
+          <h2>Business website examples.</h2>
+        </div>
+      </div>
+      <div class="grid-3">
+        <article class="case-card">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80" alt="Consulting business dashboard">
+          <div class="case-body">
+            <h3>Consulting Firm</h3>
+            <p>Corporate services, expertise pages, lead form and testimonial flow.</p>
+            <div class="tags"><span>Services</span><span>Leads</span><span>Trust</span></div>
+          </div>
+        </article>
+        <article class="case-card">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80" alt="Agency business meeting">
+          <div class="case-body">
+            <h3>Digital Agency</h3>
+            <p>Project showcase, packages, client review section and booking CTA.</p>
+            <div class="tags"><span>Portfolio</span><span>CTA</span><span>Brand</span></div>
+          </div>
+        </article>
+        <article class="case-card">
+          <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80" alt="Business finance planning">
+          <div class="case-body">
+            <h3>Finance Company</h3>
+            <p>Trust-focused page with numbers, process, contact form and branch details.</p>
+            <div class="tags"><span>Finance</span><span>Process</span><span>SEO</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid-3">
+        <article class="testimonial"><h3>Clear business story</h3><p>"The website explains our services clearly and clients reach the contact section faster."</p><strong>Ravi Kumar, Operations Head</strong></article>
+        <article class="testimonial"><h3>Premium first impression</h3><p>"The corporate design made our brand look more established and professional."</p><strong>Meera Shah, Founder</strong></article>
+        <article class="testimonial"><h3>Better enquiry flow</h3><p>"Service pages, CTA buttons and contact blocks helped us convert more visitors into leads."</p><strong>Daniel Raj, Sales Lead</strong></article>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="cta-box">
+        <p class="eyebrow">Build Business Site</p>
+        <h2>Need a premium business website?</h2>
+        <p class="lead">Build a corporate website with hero section, service pages, trust proof, case studies, testimonials, contact form, WhatsApp CTA and hosting-ready structure.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="../index.html#contact">Contact Mohammed Aaris</a>
+          <a class="btn" href="#services">View Services</a>
+        </div>
+      </div>
+      <article class="contact-panel">
+        <h3>Project Enquiry</h3>
+        <p>Business website package can include domain setup, hosting setup, responsive pages, enquiry form, WhatsApp contact and SEO-ready sections.</p>
+        <div class="contact-list">
+          <div><span>Website Type</span><strong>Corporate Business</strong></div>
+          <div><span>Pages</span><strong>Home, About, Services, Contact</strong></div>
+          <div><span>Setup</span><strong>Domain + Hosting</strong></div>
+          <div><span>Goal</span><strong>Client Enquiries</strong></div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-grid">
+        <div>
+          <strong>ApexBridge</strong>
+          <p>Premium corporate business website concept for service companies, agencies, consultants and professional brands.</p>
+        </div>
+        <div>
+          <h3>Pages</h3>
+          <a href="#services">Services</a>
+          <a href="#about">About</a>
+          <a href="#case-studies">Case Studies</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div>
+          <h3>Features</h3>
+          <a href="#services">Lead Flow</a>
+          <a href="#case-studies">Case Studies</a>
+          <a href="#contact">Contact CTA</a>
+        </div>
+        <div>
+          <h3>Build With Me</h3>
+          <p>Corporate site, business site, landing page, service website and enquiry-focused web design.</p>
+          <a class="btn primary" href="../index.html#contact">Start Website</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ApexBridge Consulting. Business website concept.</span>
+        <a class="back-top" href="#">Back to top ↑</a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
