@@ -9,6 +9,7 @@ const formStatus = document.querySelector("#formStatus");
 const liveBackground = document.querySelector("#liveBackground");
 const contactEmail = "mohammedaaris02@gmail.com";
 const copyEmailButtons = document.querySelectorAll("[data-copy-email]");
+const directMailLinks = document.querySelectorAll("[data-mail-link]");
 const messageInput = document.querySelector('#contactForm textarea[name="message"]');
 const messageCount = document.querySelector("#messageCount");
 const serviceButtons = document.querySelectorAll(".service-more");
@@ -268,6 +269,16 @@ const buildGmailUrl = () => {
   return `https://mail.google.com/mail/?view=cm&fs=1&to=${contactEmail}&su=${subject}&body=${body}`;
 };
 
+const staticMailSubject = "Website Project Enquiry";
+const staticMailBody = "Hi Mohammed Aaris,\n\nI want to discuss a website project.";
+const staticGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${contactEmail}&su=${encodeURIComponent(staticMailSubject)}&body=${encodeURIComponent(staticMailBody)}`;
+
+const shouldUseDeviceMailApp = () => {
+  const isSmallScreen = window.matchMedia("(max-width: 900px)").matches;
+  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+  return isSmallScreen || isTouchDevice;
+};
+
 const openEmail = () => {
   const data = getContactData();
   const subject = encodeURIComponent(data.subject || "Website Contact");
@@ -385,6 +396,17 @@ contactForm.addEventListener("submit", (event) => {
 
 copyEmailButtons.forEach((button) => {
   button.addEventListener("click", () => copyEmail(button));
+});
+
+directMailLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    if (shouldUseDeviceMailApp()) {
+      return;
+    }
+
+    event.preventDefault();
+    window.open(staticGmailUrl, "_blank", "noopener");
+  });
 });
 
 if (messageInput && messageCount) {
