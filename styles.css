@@ -1853,6 +1853,24 @@ a.screen-card:hover::after {
   box-shadow: 0 16px 32px rgba(34, 230, 168, 0.12);
 }
 
+.contact-info .linkedin-icon-link:hover,
+.contact-info .linkedin-icon-link:focus-visible,
+.contact-info .linkedin-icon-link:active {
+  border-color: rgba(10, 102, 194, 0.72);
+  background: rgba(10, 102, 194, 0.16);
+  color: #4da3ff;
+  box-shadow: 0 16px 34px rgba(10, 102, 194, 0.2);
+}
+
+.contact-info .mail-icon-link:hover,
+.contact-info .mail-icon-link:focus-visible,
+.contact-info .mail-icon-link:active {
+  border-color: rgba(255, 207, 92, 0.62);
+  background: rgba(255, 207, 92, 0.12);
+  color: #ffcf5c;
+  box-shadow: 0 16px 34px rgba(255, 207, 92, 0.13);
+}
+
 .icon-box {
   display: inline-grid;
   place-items: center;
@@ -1869,6 +1887,14 @@ a.screen-card:hover::after {
   width: 21px;
   height: 21px;
   fill: currentColor;
+}
+
+.mail-icon-link .icon-box svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.9;
 }
 
 .contact-form {
@@ -2341,6 +2367,24 @@ textarea {
   box-shadow: 0 16px 34px rgba(34, 230, 168, 0.14);
 }
 
+.footer-socials .footer-mail-social:hover,
+.footer-socials .footer-mail-social:focus-visible,
+.footer-socials .footer-mail-social:active {
+  border-color: rgba(255, 207, 92, 0.62);
+  background: rgba(255, 207, 92, 0.12);
+  color: #ffcf5c !important;
+  box-shadow: 0 16px 34px rgba(255, 207, 92, 0.13);
+}
+
+.footer-socials .footer-linkedin-social:hover,
+.footer-socials .footer-linkedin-social:focus-visible,
+.footer-socials .footer-linkedin-social:active {
+  border-color: rgba(10, 102, 194, 0.72);
+  background: rgba(10, 102, 194, 0.16);
+  color: #4da3ff !important;
+  box-shadow: 0 16px 34px rgba(10, 102, 194, 0.2);
+}
+
 .footer-socials a:active {
   transform: translateY(-1px) scale(0.96);
   background: rgba(77, 163, 255, 0.18);
@@ -2351,6 +2395,14 @@ textarea {
   width: 21px;
   height: 21px;
   fill: currentColor;
+}
+
+.footer-socials .footer-mail-social svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.9;
 }
 
 .footer-status {
@@ -2398,6 +2450,17 @@ textarea {
   margin: 0 0 16px;
   padding: 10px 12px;
   text-align: left;
+  transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.footer-mail-link:hover,
+.footer-mail-link:focus-visible,
+.footer-mail-link:active {
+  transform: translateY(-2px);
+  border-color: rgba(255, 207, 92, 0.56);
+  background: rgba(255, 207, 92, 0.1);
+  color: #ffcf5c;
+  box-shadow: 0 14px 30px rgba(255, 207, 92, 0.12);
 }
 
 .footer-copy span {
