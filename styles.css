@@ -1871,6 +1871,15 @@ a.screen-card:hover::after {
   box-shadow: 0 16px 34px rgba(255, 207, 92, 0.13);
 }
 
+.contact-info .instagram-icon-link:hover,
+.contact-info .instagram-icon-link:focus-visible,
+.contact-info .instagram-icon-link:active {
+  border-color: rgba(225, 48, 108, 0.7);
+  background: linear-gradient(135deg, rgba(245, 133, 41, 0.2), rgba(221, 42, 123, 0.18), rgba(81, 91, 212, 0.18));
+  color: #ff7ab6;
+  box-shadow: 0 16px 34px rgba(221, 42, 123, 0.18);
+}
+
 .icon-box {
   display: inline-grid;
   place-items: center;
@@ -1895,6 +1904,14 @@ a.screen-card:hover::after {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.9;
+}
+
+.instagram-icon-link .icon-box svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .contact-form {
@@ -2385,6 +2402,15 @@ textarea {
   box-shadow: 0 16px 34px rgba(10, 102, 194, 0.2);
 }
 
+.footer-socials .footer-instagram-social:hover,
+.footer-socials .footer-instagram-social:focus-visible,
+.footer-socials .footer-instagram-social:active {
+  border-color: rgba(225, 48, 108, 0.7);
+  background: linear-gradient(135deg, rgba(245, 133, 41, 0.2), rgba(221, 42, 123, 0.18), rgba(81, 91, 212, 0.18));
+  color: #ff7ab6 !important;
+  box-shadow: 0 16px 34px rgba(221, 42, 123, 0.18);
+}
+
 .footer-socials a:active {
   transform: translateY(-1px) scale(0.96);
   background: rgba(77, 163, 255, 0.18);
@@ -2403,6 +2429,14 @@ textarea {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.9;
+}
+
+.footer-socials .footer-instagram-social svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .footer-status {
