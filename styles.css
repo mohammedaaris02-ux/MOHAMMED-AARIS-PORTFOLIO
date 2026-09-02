@@ -56,6 +56,11 @@ a {
   text-decoration: none;
 }
 
+img,
+svg {
+  max-width: 100%;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -425,6 +430,31 @@ h1::after {
   color: var(--accent);
   font-family: Consolas, "Courier New", monospace;
   font-weight: 800;
+}
+
+.terminal-code {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.terminal-code::after {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 1.05em;
+  margin-left: 6px;
+  vertical-align: -0.16em;
+  background: currentColor;
+  animation: cursorBlink 0.9s steps(2, start) infinite;
+}
+
+@keyframes cursorBlink {
+  50% {
+    opacity: 0;
+  }
 }
 
 .terminal-card strong {
@@ -1880,6 +1910,15 @@ a.screen-card:hover::after {
   box-shadow: 0 16px 34px rgba(221, 42, 123, 0.18);
 }
 
+.contact-info .whatsapp-icon-link:hover,
+.contact-info .whatsapp-icon-link:focus-visible,
+.contact-info .whatsapp-icon-link:active {
+  border-color: rgba(37, 211, 102, 0.7);
+  background: rgba(37, 211, 102, 0.14);
+  color: #25d366;
+  box-shadow: 0 16px 34px rgba(37, 211, 102, 0.16);
+}
+
 .icon-box {
   display: inline-grid;
   place-items: center;
@@ -2039,10 +2078,20 @@ textarea {
 }
 
 .form-status {
-  min-height: 0;
-  margin: 0;
+  display: none;
+  margin: -2px 0 0;
+  border: 1px solid rgba(34, 230, 168, 0.28);
+  border-radius: 8px;
+  background: rgba(34, 230, 168, 0.08);
   color: var(--accent);
+  padding: 10px 12px;
+  font-size: 0.84rem;
   font-weight: 800;
+  line-height: 1.4;
+}
+
+.form-status.show {
+  display: block;
 }
 
 .form-actions {
@@ -2409,6 +2458,15 @@ textarea {
   background: linear-gradient(135deg, rgba(245, 133, 41, 0.2), rgba(221, 42, 123, 0.18), rgba(81, 91, 212, 0.18));
   color: #ff7ab6 !important;
   box-shadow: 0 16px 34px rgba(221, 42, 123, 0.18);
+}
+
+.footer-socials .footer-whatsapp-social:hover,
+.footer-socials .footer-whatsapp-social:focus-visible,
+.footer-socials .footer-whatsapp-social:active {
+  border-color: rgba(37, 211, 102, 0.7);
+  background: rgba(37, 211, 102, 0.14);
+  color: #25d366 !important;
+  box-shadow: 0 16px 34px rgba(37, 211, 102, 0.16);
 }
 
 .footer-socials a:active {
@@ -2818,5 +2876,377 @@ textarea {
   .footer-bottom {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 1100px) {
+  .section {
+    width: min(100% - 36px, 1160px);
+  }
+
+  .hero-grid {
+    gap: 34px;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.86fr);
+  }
+
+  .hero-actions {
+    gap: 12px;
+  }
+
+  .btn {
+    padding-inline: 18px;
+  }
+
+  .contact-layout {
+    grid-template-columns: minmax(280px, 410px) minmax(0, 500px);
+    gap: 28px;
+  }
+
+  .footer-grid {
+    grid-template-columns: minmax(280px, 1fr) minmax(160px, 0.55fr) minmax(190px, 0.7fr);
+  }
+
+  .footer-status {
+    grid-column: 1 / -1;
+    width: min(100%, 430px);
+    justify-self: end;
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header.scrolled {
+    width: min(100% - 20px, 1280px);
+    border-radius: 22px;
+  }
+
+  .nav {
+    width: min(100% - 28px, 1160px);
+    min-height: 68px;
+  }
+
+  .nav-links {
+    top: calc(100% + 10px);
+    right: 16px;
+    left: 16px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, rgba(7, 15, 24, 0.98), rgba(9, 20, 28, 0.98));
+    overflow: hidden;
+  }
+
+  .nav-links a {
+    padding: 14px 16px;
+  }
+
+  .nav-links .nav-talk-btn {
+    width: calc(100% - 24px);
+    margin: 8px 12px 12px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 84px;
+  }
+
+  .hero-content,
+  .hero-panel {
+    width: min(100%, 680px);
+    justify-self: center;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
+  .eyebrow,
+  .hero-badges,
+  .hero-actions {
+    justify-content: center;
+  }
+
+  h1::after {
+    margin-inline: auto;
+  }
+
+  .terminal-card,
+  .metric-card {
+    text-align: left;
+  }
+
+  .terminal-code {
+    font-size: 0.86rem;
+  }
+
+  .footer-status {
+    grid-column: auto;
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+
+@media (max-width: 620px) {
+  .section {
+    width: min(100% - 24px, 1160px);
+    padding: 64px 0;
+  }
+
+  .site-header.scrolled {
+    top: 8px;
+    width: min(100% - 16px, 1280px);
+    border-radius: 18px;
+  }
+
+  .nav {
+    width: min(100% - 22px, 1160px);
+  }
+
+  .brand {
+    width: 42px;
+    height: 42px;
+  }
+
+  .nav-links {
+    right: 10px;
+    left: 10px;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 18vw, 4.45rem);
+    line-height: 0.94;
+  }
+
+  h1::after {
+    width: min(250px, 64vw);
+    margin-top: 18px;
+  }
+
+  .hero {
+    padding-top: 62px;
+  }
+
+  .hero-grid {
+    gap: 24px;
+  }
+
+  .hero-title {
+    margin-top: 20px;
+    font-size: clamp(1.18rem, 8vw, 1.65rem);
+  }
+
+  .hero-copy {
+    margin-top: 14px;
+    font-size: 0.98rem;
+  }
+
+  .hero-badges {
+    gap: 8px;
+    margin-top: 22px;
+  }
+
+  .hero-badges span {
+    flex: 1 1 120px;
+    padding: 9px 10px;
+    text-align: center;
+  }
+
+  .hero-actions {
+    gap: 10px;
+    margin-top: 26px;
+  }
+
+  .btn {
+    min-height: 48px;
+  }
+
+  .terminal-card,
+  .metric-card,
+  .card,
+  .contact-info,
+  .contact-form {
+    padding: 18px;
+  }
+
+  .terminal-dots {
+    margin-bottom: 16px;
+  }
+
+  .terminal-code {
+    display: block;
+    font-size: 0.74rem;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+  }
+
+  .terminal-card strong {
+    font-size: clamp(1.45rem, 9vw, 2rem);
+  }
+
+  .section-heading {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .section-heading .eyebrow {
+    justify-content: center;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(1.85rem, 11vw, 2.55rem);
+  }
+
+  .about-text,
+  .experience-copy {
+    padding: 18px;
+    border-left: 0;
+    border-top: 3px solid var(--accent);
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(34, 230, 168, 0.08), transparent);
+  }
+
+  .about-photo-card {
+    width: min(72vw, 210px);
+  }
+
+  .skill-panel {
+    padding: 20px;
+  }
+
+  .skill-panel-title {
+    gap: 12px;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+  }
+
+  .skill-icon {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 auto;
+  }
+
+  .skill-items span {
+    min-height: 52px;
+    padding: 11px 12px 11px 58px;
+  }
+
+  .project-thumb {
+    aspect-ratio: 16 / 11;
+  }
+
+  .project-content {
+    gap: 11px;
+    padding: 18px 18px 0;
+  }
+
+  .project-btn {
+    width: calc(100% - 36px);
+    margin: 18px;
+  }
+
+  .contact-section {
+    width: min(100% - 24px, 1220px);
+    padding-top: 62px;
+  }
+
+  .contact-hero-heading h2 {
+    font-size: clamp(2.45rem, 15vw, 3.5rem);
+    line-height: 0.96;
+  }
+
+  .contact-hero-heading > p {
+    font-size: 0.98rem;
+  }
+
+  .contact-layout {
+    gap: 24px;
+  }
+
+  .availability-pill {
+    justify-self: center;
+  }
+
+  .copy-contact,
+  .contact-card {
+    min-height: 74px;
+    padding: 16px 16px 16px 66px;
+  }
+
+  .copy-contact strong,
+  .location-card strong {
+    font-size: 0.94rem;
+  }
+
+  .contact-icon {
+    left: 16px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .find-me-label {
+    text-align: center;
+  }
+
+  .contact-quick-links {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .contact-form {
+    gap: 10px;
+    border-radius: 14px;
+  }
+
+  input,
+  textarea {
+    font-size: 16px;
+  }
+
+  .footer-brand,
+  .footer-link-list,
+  .footer-status {
+    text-align: center;
+  }
+
+  .footer-logo {
+    margin-inline: auto;
+  }
+
+  .footer-socials {
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 22px;
+  }
+
+  .footer-bottom {
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .footer-bottom a {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 380px) {
+  .section,
+  .contact-section {
+    width: min(100% - 18px, 1220px);
+  }
+
+  h1 {
+    font-size: clamp(2.65rem, 18vw, 3.45rem);
+  }
+
+  .terminal-card,
+  .metric-card,
+  .card,
+  .contact-form,
+  .skill-panel,
+  .project-content {
+    padding: 16px;
+  }
+
+  .contact-info .icon-link,
+  .footer-socials a {
+    width: 42px;
+    height: 42px;
   }
 }

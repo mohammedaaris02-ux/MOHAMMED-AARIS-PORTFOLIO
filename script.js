@@ -218,7 +218,9 @@ const getContactData = () => {
 
 const buildMessage = () => {
   const data = getContactData();
-  return `Name: ${data.name}
+  return `New Website Enquiry
+
+Name: ${data.name}
 Email: ${data.email}
 Phone / WhatsApp: ${data.phone}
 Project Title: ${data.subject}
@@ -277,6 +279,29 @@ const shouldUseDeviceMailApp = () => {
   const isSmallScreen = window.matchMedia("(max-width: 900px)").matches;
   const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
   return isSmallScreen || isTouchDevice;
+};
+
+let formStatusTimer = 0;
+
+const updateMessageCountValue = () => {
+  if (messageInput && messageCount) {
+    messageCount.textContent = String(messageInput.value.length);
+  }
+};
+
+const showFormStatus = (message) => {
+  if (!formStatus) {
+    return;
+  }
+
+  window.clearTimeout(formStatusTimer);
+  formStatus.textContent = message;
+  formStatus.classList.add("show");
+
+  formStatusTimer = window.setTimeout(() => {
+    formStatus.classList.remove("show");
+    formStatus.textContent = "";
+  }, 15000);
 };
 
 const openEmail = () => {
@@ -346,9 +371,9 @@ const updateHeaderShape = () => {
 };
 
 const updateActiveMenu = () => {
-  const sections = ["about", "skills", "certifications", "services", "projects", "contact"];
+  const sections = ["home", "about", "skills", "certifications", "services", "projects", "contact"];
   const scrollPosition = window.scrollY + window.innerHeight * 0.35;
-  let activeSection = "about";
+  let activeSection = "home";
 
   sections.forEach((sectionId) => {
     const section = document.getElementById(sectionId);
@@ -376,12 +401,13 @@ whatsappButton.addEventListener("click", async () => {
     return;
   }
 
-  formStatus.textContent = "Opening WhatsApp with your message...";
   const data = getContactData();
 
   const encodedMessage = encodeURIComponent(buildMessage());
-  window.open(`https://wa.me/917200291544?text=${encodedMessage}`, "_blank", "noopener");
-  formStatus.textContent = "WhatsApp opened. Please press Send there.";
+  window.open(`https://wa.me/919344646465?text=${encodedMessage}`, "_blank", "noopener");
+  contactForm.reset();
+  updateMessageCountValue();
+  showFormStatus("Your enquiry has been submitted. I will contact you soon.");
 });
 
 contactForm.addEventListener("submit", (event) => {
@@ -410,12 +436,8 @@ directMailLinks.forEach((link) => {
 });
 
 if (messageInput && messageCount) {
-  const updateMessageCount = () => {
-    messageCount.textContent = String(messageInput.value.length);
-  };
-
-  messageInput.addEventListener("input", updateMessageCount);
-  updateMessageCount();
+  messageInput.addEventListener("input", updateMessageCountValue);
+  updateMessageCountValue();
 }
 
 serviceButtons.forEach((button) => {
@@ -520,6 +542,7 @@ document.querySelectorAll(".project-card").forEach((card) => {
   const projectKey = card.dataset.project;
 
   card.addEventListener("click", () => openProjectModal(projectKey));
+
   card.addEventListener("keydown", (event) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
@@ -539,6 +562,7 @@ document.querySelectorAll("[data-close-service]").forEach((element) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && projectModal?.classList.contains("open")) {
     closeProjectModal();
+    return;
   }
 
   if (event.key === "Escape" && serviceModal?.classList.contains("open")) {
