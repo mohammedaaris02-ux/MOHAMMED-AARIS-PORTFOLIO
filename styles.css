@@ -232,6 +232,13 @@ svg {
   align-items: center;
 }
 
+.hero-content,
+.hero-panel,
+.terminal-card,
+.metric-card {
+  min-width: 0;
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -435,9 +442,11 @@ h1::after {
 .terminal-code {
   position: relative;
   display: inline-block;
+  width: 100%;
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .terminal-code::after {
@@ -2940,6 +2949,16 @@ textarea {
   .nav-links .nav-talk-btn {
     width: calc(100% - 24px);
     margin: 8px 12px 12px;
+  }
+
+  .hero-grid,
+  .about-layout,
+  .experience-layout,
+  .contact-layout,
+  .skills-stack,
+  .list-grid,
+  .footer-grid {
+    grid-template-columns: 1fr;
   }
 
   .hero {
