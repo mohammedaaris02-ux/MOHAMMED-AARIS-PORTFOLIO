@@ -204,13 +204,34 @@ svg {
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
   padding: 11px;
+  transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
 }
 
 .nav-toggle span {
   display: block;
   height: 2px;
   margin: 5px 0;
+  border-radius: 999px;
   background: var(--text);
+  transition: transform 0.24s ease, opacity 0.18s ease, background 0.22s ease;
+}
+
+.nav-toggle[aria-expanded="true"] {
+  border-color: rgba(34, 230, 168, 0.58);
+  background: rgba(34, 230, 168, 0.1);
+  box-shadow: 0 16px 34px rgba(34, 230, 168, 0.16);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .section {
@@ -3287,6 +3308,24 @@ textarea {
     font-size: clamp(1.1rem, 7.2vw, 1.52rem);
   }
 
+  .hero-badges {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+  }
+
+  .hero-badges span {
+    display: grid;
+    place-items: center;
+    min-height: 64px;
+    padding: 10px 8px;
+    text-align: center;
+    line-height: 1.22;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
   .next-contact-section {
     width: 100%;
     max-width: none;
@@ -3320,5 +3359,15 @@ textarea {
 @media (max-width: 380px) {
   h1 {
     font-size: clamp(2.48rem, 14vw, 3.1rem);
+  }
+
+  .hero-badges {
+    gap: 7px;
+  }
+
+  .hero-badges span {
+    min-height: 58px;
+    padding: 8px 6px;
+    font-size: 0.9rem;
   }
 }
