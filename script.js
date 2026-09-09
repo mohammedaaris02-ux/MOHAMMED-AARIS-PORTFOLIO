@@ -505,6 +505,7 @@ const openProjectModal = (projectKey) => {
   renderList(projectModalAdmin, project.admin);
   renderList(projectModalSecurity, project.security);
   projectModalOutcome.textContent = project.outcome;
+  document.getElementById("projectLiveDemo").hidden = projectKey !== "business";
   projectModalScreens.innerHTML = project.screens
     .map((screen, index) => `
       <${screen.demoUrl ? `a href="${screen.demoUrl}" target="_blank" rel="noopener" data-action="${screen.action || "Open Site"}"` : "article"} class="screen-card demo-site-card">

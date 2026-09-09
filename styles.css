@@ -1500,6 +1500,19 @@ h1::after {
   gap: 14px;
 }
 
+.project-live-demo .screen-card {
+  width: 100%;
+  max-width: 520px;
+  min-height: 0;
+  margin-inline: auto;
+  padding-top: 18px;
+}
+
+.project-live-demo .screen-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
 .screen-grid:has(.demo-site-card:only-child) {
   grid-template-columns: minmax(280px, 520px);
   justify-content: center;
