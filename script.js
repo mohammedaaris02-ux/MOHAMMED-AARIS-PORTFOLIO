@@ -35,6 +35,22 @@ const projectModalOutcome = document.querySelector("#projectModalOutcome");
 const projectModalScreens = document.querySelector("#projectModalScreens");
 
 const serviceDetails = {
+  seo: {
+    category: "SEO Services",
+    title: "Search Engine Optimization",
+    image: "seo-detail.jpg",
+    alt: "Reviewing website strategy and performance reports",
+    description: "Help the right customers discover your business with a clear SEO strategy, well-structured content, and a technically sound website. I optimize your site for search visibility and a better visitor experience.",
+    tech: ["SEO Audit", "On-Page SEO", "Technical SEO", "Keyword Research", "Search Console"],
+    details: [
+      ["Website SEO Audit", "Review page structure, crawlability, indexing, broken links, and performance to identify practical improvements."],
+      ["Keyword & Content Strategy", "Research relevant search terms and map them to useful service pages and content that match your customers' needs."],
+      ["On-Page Optimization", "Improve page titles, meta descriptions, headings, internal links, and descriptive image text for clear, focused pages."],
+      ["Technical SEO", "Review sitemaps, robots directives, canonical URLs, mobile usability, and loading performance to support search engine discovery."],
+      ["Measurement & Reporting", "Set up or review Google Search Console and analytics, then monitor search visibility, traffic, and enquiry activity."],
+      ["Long-Term Value", "Build a stronger search foundation through prioritized fixes and ongoing refinement. Rankings depend on competition and search engine evaluation."],
+    ],
+  },
   web: {
     category: "Web Development",
     title: "Professional Web Development",
@@ -45,8 +61,8 @@ const serviceDetails = {
     details: [
       ["Domain", "Business-ready domain setup with SSL and clean routing."],
       ["Hosting", "Netlify, Vercel, shared hosting, or VPS based on project size."],
-      ["Frontend", "HTML, CSS, JavaScript, ReactJS, responsive UI and clean sections."],
-      ["Backend", "Node.js, Express, APIs, form handling, and integrations."],
+      ["Frontend", "Polished, responsive page layouts with clear navigation and engaging content that guide visitors toward an enquiry."],
+      ["Backend", "Reliable form processing and connected services that support customer enquiries and everyday website operations."],
       ["Database", "MongoDB or MySQL for dynamic content, leads, and records."],
       ["Result", "A modern website that loads fast and works smoothly on mobile and desktop."],
     ],
@@ -109,8 +125,8 @@ const serviceDetails = {
     details: [
       ["Domain", "Private admin domain or business subdomain setup."],
       ["Hosting", "VPS, cloud hosting, or full-stack deployment."],
-      ["Frontend", "ReactJS dashboards, tables, filters, charts, and admin layouts."],
-      ["Backend", "Node.js APIs, authentication, roles, lead workflows, and reporting logic."],
+      ["Frontend", "Organized dashboards with clear reports, searchable records, and intuitive controls for efficient daily work."],
+      ["Backend", "Controlled team access, structured lead tracking, and dependable reporting workflows to keep business operations organized."],
       ["Database", "MongoDB or MySQL for customers, leads, tasks, and reports."],
       ["Result", "A practical business dashboard for managing workflow and customer records."],
     ],

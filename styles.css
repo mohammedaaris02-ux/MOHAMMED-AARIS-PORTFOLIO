@@ -1028,11 +1028,11 @@ h1::after {
 }
 
 .card-grid .service-card:nth-child(4) {
-  grid-column: 2 / span 2;
+  grid-column: span 2;
 }
 
 .card-grid .service-card:nth-child(5) {
-  grid-column: 4 / span 2;
+  grid-column: span 2;
 }
 
 .project-grid {
@@ -1141,6 +1141,28 @@ h1::after {
 
 .service-details strong {
   color: #f7fbff;
+}
+
+.service-card > img,
+.project-card > img.project-thumb {
+  clip-path: inset(0);
+  transition: transform 450ms ease, clip-path 450ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .service-card > img:hover,
+  .project-card > img.project-thumb:hover {
+    transform: scale(1.05);
+    clip-path: inset(2.381%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .service-card:focus-within > img,
+  .project-card:focus-visible > img.project-thumb {
+    transform: scale(1.05);
+    clip-path: inset(2.381%);
+  }
 }
 
 .service-modal-image {
