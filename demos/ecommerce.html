@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopSphere | Online Shopping Store</title>
+  <link rel="icon" type="image/jpeg" href="../assets/hma-favicon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071019;
+      --panel: #111a27;
+      --line: rgba(255, 255, 255, 0.14);
+      --text: #f6fbff;
+      --muted: #aebdcc;
+      --green: #f97316;
+      --blue: #7c3aed;
+      --gold: #f59e0b;
+      --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(249, 115, 22, 0.18), transparent 30rem),
+        radial-gradient(circle at 88% 18%, rgba(124, 58, 237, 0.16), transparent 32rem),
+        linear-gradient(135deg, #0f0718, var(--bg) 52%, #160c05);
+      color: var(--text);
+      font-family: Jost, system-ui, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      background: rgba(5, 8, 14, 0.82);
+      padding: 18px max(18px, calc((100% - 1180px) / 2));
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+    }
+
+    .brand span {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(249, 115, 22, 0.5);
+      border-radius: 10px;
+      background: rgba(249, 115, 22, 0.12);
+      color: var(--green);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links a,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 16px;
+      font-weight: 900;
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .nav-links a:hover,
+    .btn:hover {
+      transform: translateY(-3px);
+      border-color: rgba(249, 115, 22, 0.55);
+      background: rgba(249, 115, 22, 0.1);
+      box-shadow: 0 18px 36px rgba(249, 115, 22, 0.12);
+    }
+
+    .btn.primary {
+      border-color: rgba(249, 115, 22, 0.5);
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      color: #041017;
+    }
+
+    .cart-pill {
+      gap: 8px;
+    }
+
+    .cart-count {
+      display: inline-grid;
+      place-items: center;
+      min-width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      color: #041017;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+      gap: 44px;
+      align-items: center;
+      min-height: calc(100vh - 80px);
+      padding: 70px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--green);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.2rem, 7vw, 6.4rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .store-preview {
+      overflow: hidden;
+      border: 1px solid rgba(249, 115, 22, 0.28);
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)), var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .store-preview img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .store-preview-content {
+      display: grid;
+      gap: 14px;
+      padding: 24px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .price {
+      color: var(--green);
+      font-size: 1.8rem;
+      font-weight: 900;
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .product,
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)), var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease, background 0.24s ease;
+    }
+
+    .product:hover,
+    .panel:hover {
+      transform: translateY(-8px);
+      border-color: rgba(249, 115, 22, 0.55);
+      background: linear-gradient(145deg, rgba(249, 115, 22, 0.12), rgba(124, 58, 237, 0.08)), var(--panel);
+      box-shadow: 0 34px 90px rgba(249, 115, 22, 0.14);
+    }
+
+    .product img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 11;
+      object-fit: cover;
+    }
+
+    .product-body {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .product-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .product-price {
+      color: #0f172a;
+      font-size: 1.18rem;
+      font-weight: 900;
+    }
+
+    .add-cart,
+    .qty-btn {
+      border: 1px solid rgba(249, 115, 22, 0.34);
+      border-radius: 999px;
+      background: rgba(249, 115, 22, 0.12);
+      color: #064e3b;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 900;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .add-cart {
+      min-height: 40px;
+      padding: 0 14px;
+    }
+
+    .add-cart:hover,
+    .qty-btn:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      box-shadow: 0 16px 32px rgba(124, 58, 237, 0.18);
+      color: #041017;
+    }
+
+    .product h3,
+    .panel h3 {
+      margin: 0;
+      font-size: 1.08rem;
+    }
+
+    .product p,
+    .panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .mini-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mini-tags span {
+      border: 1px solid rgba(124, 58, 237, 0.28);
+      border-radius: 999px;
+      background: rgba(124, 58, 237, 0.08);
+      color: #312e81;
+      padding: 7px 10px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .mini-tags span:hover {
+      transform: translateY(-2px);
+      border-color: rgba(249, 115, 22, 0.52);
+      background: linear-gradient(135deg, rgba(255, 237, 213, 0.95), rgba(237, 233, 254, 0.96));
+      color: #111827;
+    }
+
+    .store-search {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      width: min(680px, 100%);
+      margin-top: 24px;
+      border: 1px solid rgba(17, 24, 39, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      padding: 8px;
+      box-shadow: 0 18px 50px rgba(17, 24, 39, 0.08);
+    }
+
+    .store-search input {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: #111827;
+      font: inherit;
+      font-weight: 800;
+      outline: 0;
+      padding: 0 16px;
+    }
+
+    .category-strip,
+    .offer-strip,
+    .store-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .category-strip span,
+    .offer-strip span,
+    .store-trust span {
+      border: 1px solid rgba(249, 115, 22, 0.22);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      color: #334155;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+      font-weight: 900;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .offer-strip {
+      margin: 0 0 28px;
+    }
+
+    .offer-strip span {
+      border-color: rgba(124, 58, 237, 0.22);
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(124, 58, 237, 0.12));
+      color: #0f172a;
+    }
+
+    .product-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      color: #475569;
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+
+    .rating {
+      border-radius: 999px;
+      background: #16a34a;
+      color: #ffffff;
+      padding: 5px 8px;
+      font-size: 0.78rem;
+    }
+
+    .deal-price {
+      display: grid;
+      gap: 2px;
+    }
+
+    .mrp {
+      color: #94a3b8;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-decoration: line-through;
+    }
+
+    .store-feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .store-feature {
+      min-height: 176px;
+    }
+
+    .feature-number {
+      color: #0ea5e9;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.8fr;
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .cart-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+      padding: 14px 0;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .cart-line strong {
+      color: var(--text);
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 16px;
+      align-items: center;
+      border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+      padding: 14px 0;
+    }
+
+    .cart-item-title {
+      color: #111827;
+      font-weight: 900;
+    }
+
+    .cart-item-price {
+      color: #475569;
+      font-weight: 900;
+    }
+
+    .qty-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      justify-self: end;
+    }
+
+    .qty-btn {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+    }
+
+    .cart-empty,
+    .buy-status {
+      margin: 14px 0 0;
+      color: #5b6676;
+      line-height: 1.6;
+    }
+
+    .cart-total {
+      margin-top: 10px;
+      border-bottom: 0;
+      font-size: 1.08rem;
+    }
+
+    .checkout-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .checkout-suite {
+      display: grid;
+      gap: 18px;
+    }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .pay-option {
+      border: 1px solid rgba(124, 58, 237, 0.16);
+      border-radius: 14px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.86), rgba(255, 247, 237, 0.68));
+      color: #111827;
+      cursor: pointer;
+      display: grid;
+      gap: 8px;
+      min-height: 112px;
+      padding: 14px;
+      text-align: left;
+      transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .pay-option strong {
+      font-size: 0.98rem;
+    }
+
+    .pay-option span {
+      color: #64748b;
+      font-size: 0.82rem;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .pay-option.is-active,
+    .pay-option:hover {
+      transform: translateY(-4px);
+      border-color: rgba(249, 115, 22, 0.5);
+      background: linear-gradient(135deg, rgba(255, 237, 213, 0.96), rgba(237, 233, 254, 0.94));
+      box-shadow: 0 22px 44px rgba(124, 58, 237, 0.14);
+    }
+
+    .card-preview {
+      overflow: hidden;
+      position: relative;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.35), transparent 8rem),
+        linear-gradient(135deg, #111827, #7c2d12 46%, #5b21b6);
+      color: #ffffff;
+      min-height: 190px;
+      padding: 22px;
+      box-shadow: 0 24px 60px rgba(17, 24, 39, 0.22);
+    }
+
+    .card-preview::after {
+      content: "";
+      position: absolute;
+      right: -42px;
+      bottom: -42px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .card-preview-top,
+    .card-preview-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-chip {
+      width: 46px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+    }
+
+    .card-number {
+      position: relative;
+      z-index: 1;
+      margin: 42px 0 30px;
+      font-size: clamp(1.25rem, 3vw, 1.8rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .payment-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .payment-field {
+      border: 1px solid rgba(17, 24, 39, 0.08);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.74);
+      padding: 12px 14px;
+    }
+
+    .payment-field span {
+      display: block;
+      color: #64748b;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .payment-field strong {
+      color: #111827;
+    }
+
+    .gateway-live-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .gateway-live-form label {
+      display: grid;
+      gap: 7px;
+    }
+
+    .gateway-live-form label.full {
+      grid-column: 1 / -1;
+    }
+
+    .gateway-live-form span {
+      color: #64748b;
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .gateway-live-form input {
+      width: 100%;
+      border: 1px solid rgba(124, 58, 237, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.82);
+      color: #111827;
+      font: inherit;
+      font-weight: 900;
+      outline: 0;
+      padding: 13px 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .gateway-live-form input:focus {
+      border-color: rgba(249, 115, 22, 0.55);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+    }
+
+    .gateway-panel {
+      display: none;
+      margin-top: 16px;
+    }
+
+    .gateway-panel.is-active {
+      display: block;
+    }
+
+    .processing-steps {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .process-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #64748b;
+      font-weight: 900;
+    }
+
+    .process-step::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(124, 58, 237, 0.22);
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    .process-step.is-active {
+      color: #7c2d12;
+    }
+
+    .process-step.is-active::before {
+      border-color: #f97316;
+      background: #f97316;
+      box-shadow: 0 0 0 6px rgba(249, 115, 22, 0.12);
+    }
+
+    .order-history {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .order-row {
+      border: 1px solid rgba(124, 58, 237, 0.12);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.74);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+    }
+
+    .order-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #f97316;
+      box-shadow: 0 0 0 6px rgba(249, 115, 22, 0.12);
+    }
+
+    .order-row strong {
+      color: #111827;
+    }
+
+    .order-row span,
+    .order-row small {
+      color: #64748b;
+      font-weight: 800;
+    }
+
+    .delivery-card {
+      display: grid;
+      gap: 12px;
+    }
+
+    .delivery-card .cart-line:last-child {
+      border-bottom: 0;
+    }
+
+    .customer-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .customer-form label {
+      display: grid;
+      gap: 7px;
+    }
+
+    .customer-form label.full {
+      grid-column: 1 / -1;
+    }
+
+    .customer-form span {
+      color: #64748b;
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .customer-form input,
+    .customer-form textarea {
+      width: 100%;
+      border: 1px solid rgba(124, 58, 237, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.82);
+      color: #111827;
+      font: inherit;
+      font-weight: 800;
+      outline: 0;
+      padding: 13px 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .customer-form textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .customer-form input:focus,
+    .customer-form textarea:focus {
+      border-color: rgba(249, 115, 22, 0.55);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+    }
+
+    .buy-status {
+      display: none;
+      border: 1px solid rgba(249, 115, 22, 0.24);
+      border-radius: 12px;
+      background: rgba(249, 115, 22, 0.1);
+      padding: 12px 14px;
+      color: #047857;
+      font-weight: 900;
+    }
+
+    .buy-status.is-visible {
+      display: block;
+    }
+
+    .footer {
+      margin: 90px 0 0;
+      border-top: 1px solid rgba(124, 58, 237, 0.12);
+      color: #475569;
+      padding: 0 0 34px;
+    }
+
+    .store-footer-panel {
+      display: grid;
+      grid-template-columns: 1.25fr 0.8fr 0.8fr 1fr;
+      gap: 26px;
+      border: 1px solid rgba(124, 58, 237, 0.14);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(249, 115, 22, 0.16), transparent 18rem),
+        radial-gradient(circle at 90% 0%, rgba(124, 58, 237, 0.14), transparent 18rem),
+        rgba(255, 255, 255, 0.82);
+      box-shadow: 0 34px 90px rgba(67, 56, 202, 0.12);
+      padding: 28px;
+      text-align: left;
+    }
+
+    .store-footer-brand {
+      display: grid;
+      gap: 14px;
+    }
+
+    .footer-brand-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #111827;
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+
+    .footer-brand-line span {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(249, 115, 22, 0.4);
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255, 237, 213, 0.95), rgba(237, 233, 254, 0.92));
+      color: #9a3412;
+    }
+
+    .store-footer-panel p {
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .footer-column {
+      display: grid;
+      align-content: start;
+      gap: 12px;
+    }
+
+    .footer-column h3 {
+      margin: 0;
+      color: #111827;
+      font-size: 0.86rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .footer-column a,
+    .footer-column span {
+      color: #475569;
+      font-weight: 850;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .footer-column a:hover {
+      color: #ea580c;
+      transform: translateX(4px);
+    }
+
+    .footer-cta {
+      border: 1px solid rgba(249, 115, 22, 0.18);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255, 237, 213, 0.9), rgba(237, 233, 254, 0.82));
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+    }
+
+    .footer-cta strong {
+      color: #111827;
+      font-size: 1.05rem;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 18px;
+      color: #64748b;
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .footer-bottom a {
+      border: 1px solid rgba(124, 58, 237, 0.14);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #7c2d12;
+      padding: 9px 14px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .footer-bottom a:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(255, 237, 213, 0.96), rgba(237, 233, 254, 0.96));
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .checkout-grid,
+      .grid,
+      .store-feature-grid,
+      .payment-grid,
+      .payment-form,
+      .customer-form {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .store-footer-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 16vw, 4.2rem);
+      }
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 10% 8%, rgba(249, 115, 22, 0.16), transparent 28rem),
+        radial-gradient(circle at 88% 20%, rgba(124, 58, 237, 0.18), transparent 30rem),
+        radial-gradient(circle at 55% 68%, rgba(245, 158, 11, 0.12), transparent 26rem),
+        linear-gradient(135deg, #fff7ed, #f8fafc 46%, #eef2ff);
+      color: #111827;
+    }
+
+    .nav {
+      border-bottom-color: rgba(17, 24, 39, 0.08);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 18px 50px rgba(17, 24, 39, 0.08);
+    }
+
+    .nav-links a,
+    .btn {
+      border-color: rgba(17, 24, 39, 0.1);
+      background: rgba(255, 255, 255, 0.72);
+      color: #111827;
+    }
+
+    .cart-count {
+      color: #041017;
+    }
+
+    .store-preview,
+    .product,
+    .panel {
+      border-color: rgba(124, 58, 237, 0.14);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 247, 237, 0.78)),
+        radial-gradient(circle at 18% 0%, rgba(249, 115, 22, 0.12), transparent 16rem);
+      color: #111827;
+      box-shadow: 0 28px 80px rgba(67, 56, 202, 0.12);
+    }
+
+    .store-preview:hover,
+    .product:hover,
+    .panel:hover {
+      border-color: rgba(249, 115, 22, 0.45);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(237, 233, 254, 0.82)),
+        radial-gradient(circle at 18% 0%, rgba(249, 115, 22, 0.16), transparent 16rem);
+      box-shadow: 0 32px 90px rgba(124, 58, 237, 0.18);
+    }
+
+    .hero-copy,
+    .product p,
+    .panel p,
+    .footer,
+    .cart-line {
+      color: #5b6676;
+    }
+
+    .cart-line strong,
+    .cart-item-title {
+      color: #111827;
+    }
+
+    .brand span {
+      border-color: rgba(249, 115, 22, 0.48);
+      background: linear-gradient(135deg, rgba(255, 237, 213, 0.9), rgba(237, 233, 254, 0.82));
+      color: #9a3412;
+    }
+
+    .eyebrow,
+    .price,
+    .feature-number {
+      color: #ea580c;
+    }
+
+    .eyebrow::before {
+      background: linear-gradient(90deg, #f97316, #7c3aed);
+    }
+
+    .btn.primary,
+    .cart-count {
+      border-color: rgba(249, 115, 22, 0.36);
+      background: linear-gradient(135deg, #f97316, #7c3aed);
+      color: #ffffff;
+      box-shadow: 0 16px 34px rgba(124, 58, 237, 0.18);
+    }
+
+    .btn.primary:hover,
+    .nav-links a:hover,
+    .btn:hover {
+      border-color: rgba(249, 115, 22, 0.55);
+      background: linear-gradient(135deg, rgba(255, 237, 213, 0.96), rgba(237, 233, 254, 0.96));
+      color: #111827;
+      box-shadow: 0 18px 42px rgba(249, 115, 22, 0.18);
+    }
+
+    .btn.primary:active,
+    .add-cart:active,
+    .qty-btn:active {
+      transform: translateY(0) scale(0.98);
+      background: linear-gradient(135deg, #c2410c, #5b21b6);
+      color: #ffffff;
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.72;
+      transform: none;
+    }
+
+    .add-cart,
+    .qty-btn {
+      border-color: rgba(249, 115, 22, 0.36);
+      background: rgba(255, 237, 213, 0.82);
+      color: #7c2d12;
+    }
+
+    .add-cart:hover,
+    .qty-btn:hover {
+      background: linear-gradient(135deg, #f97316, #7c3aed);
+      box-shadow: 0 18px 36px rgba(124, 58, 237, 0.2);
+      color: #ffffff;
+    }
+
+    .rating {
+      background: linear-gradient(135deg, #f97316, #7c3aed);
+      color: #ffffff;
+    }
+
+    .category-strip span,
+    .offer-strip span,
+    .store-trust span {
+      border-color: rgba(249, 115, 22, 0.22);
+      background: rgba(255, 255, 255, 0.74);
+      color: #312e81;
+    }
+
+    .offer-strip span:hover,
+    .category-strip span:hover,
+    .store-trust span:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(255, 237, 213, 0.98), rgba(237, 233, 254, 0.96));
+      color: #111827;
+      border-color: rgba(124, 58, 237, 0.35);
+    }
+
+    .client-analysis {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .analysis-number {
+      color: #0ea5e9;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    @media (max-width: 860px) {
+      .client-analysis {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="../index.html#projects"><span>SS</span> ShopSphere</a>
+    <div class="nav-links">
+      <a href="#deals">Deals</a>
+      <a href="#products">Products</a>
+      <a href="#storefront">Storefront</a>
+      <a class="cart-pill" href="#checkout">Cart <span class="cart-count" id="cartCount">0</span></a>
+      <a href="../index.html#contact">Let's Talk</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Online Shopping Store</p>
+        <h1>Shop Electronics, Fashion & Daily Deals</h1>
+        <p class="hero-copy">A customer-ready e-commerce storefront with search, categories, product listings, offers, cart quantity controls, checkout totals, and a clean buying journey.</p>
+        <form class="store-search" id="storeSearch">
+          <input type="search" id="searchInput" placeholder="Search shoes, watches, headphones, bags..." aria-label="Search products">
+          <button class="btn primary" type="submit">Search</button>
+        </form>
+        <div class="category-strip" aria-label="Shopping categories">
+          <span>Mobiles</span>
+          <span>Fashion</span>
+          <span>Electronics</span>
+          <span>Footwear</span>
+          <span>Accessories</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn primary" href="#products">Shop Products</a>
+          <a class="btn" href="#checkout">View Cart</a>
+        </div>
+      </div>
+      <article class="store-preview">
+        <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=1100&q=80" alt="Customer shopping online with card and laptop">
+        <div class="store-preview-content">
+          <div class="price-row">
+            <strong>Cart Total</strong>
+            <span class="price" id="heroCartTotal">Rs. 0</span>
+          </div>
+          <p>Choose products, update quantity, apply instant discount, and place an order enquiry from the checkout.</p>
+          <div class="store-trust">
+            <span>Secure checkout</span>
+            <span>Fast delivery</span>
+            <span>Easy returns</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" id="deals">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Today Deals</p>
+          <h2>Featured Shopping Offers</h2>
+        </div>
+      </div>
+      <div class="offer-strip">
+        <span>Bank offer: 10% instant savings</span>
+        <span>Free delivery above Rs. 999</span>
+        <span>Exchange available on selected products</span>
+        <span>Top rated products only</span>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Featured Products</p>
+          <h2>Top Picks For You</h2>
+        </div>
+      </div>
+      <div class="grid">
+        <article class="product">
+          <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=900&q=80" alt="Premium sneakers product card">
+          <div class="product-body">
+            <div class="product-meta"><span class="rating">4.6</span><span>2,418 ratings</span><span>In stock</span></div>
+            <h3>Urban Runner Sneakers</h3>
+            <p>Lightweight daily wear sneakers with breathable mesh, grip sole, and fast dispatch.</p>
+            <div class="mini-tags"><span>Size 7-11</span><span>Free Delivery</span></div>
+            <div class="product-foot">
+              <span class="deal-price"><span class="product-price">Rs. 2,499</span><span class="mrp">Rs. 3,999</span></span>
+              <button class="add-cart" type="button" data-name="Urban Runner Sneakers" data-price="2499">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+        <article class="product">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80" alt="Watch product e-commerce card">
+          <div class="product-body">
+            <div class="product-meta"><span class="rating">4.4</span><span>1,963 ratings</span><span>Best seller</span></div>
+            <h3>PulseFit Smart Watch</h3>
+            <p>AMOLED display, health tracking, Bluetooth calling, and long battery life.</p>
+            <div class="mini-tags"><span>1 Year Warranty</span><span>Offer</span></div>
+            <div class="product-foot">
+              <span class="deal-price"><span class="product-price">Rs. 4,999</span><span class="mrp">Rs. 7,999</span></span>
+              <button class="add-cart" type="button" data-name="PulseFit Smart Watch" data-price="4999">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+        <article class="product">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80" alt="Sports shoes shopping card">
+          <div class="product-body">
+            <div class="product-meta"><span class="rating">4.7</span><span>3,204 ratings</span><span>Limited deal</span></div>
+            <h3>Sport Pro Collection</h3>
+            <p>Performance shoe collection with responsive cushioning and premium comfort.</p>
+            <div class="mini-tags"><span>Trending</span><span>Quick Buy</span></div>
+            <div class="product-foot">
+              <span class="deal-price"><span class="product-price">Rs. 3,299</span><span class="mrp">Rs. 5,499</span></span>
+              <button class="add-cart" type="button" data-name="Sport Pro Collection" data-price="3299">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+        <article class="product">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80" alt="Wireless headphones product card">
+          <div class="product-body">
+            <div class="product-meta"><span class="rating">4.5</span><span>5,870 ratings</span><span>Fast delivery</span></div>
+            <h3>SonicAir Headphones</h3>
+            <p>Wireless headphones with deep bass, noise isolation, and soft ear cushions.</p>
+            <div class="mini-tags"><span>Bluetooth</span><span>Deal</span></div>
+            <div class="product-foot">
+              <span class="deal-price"><span class="product-price">Rs. 1,899</span><span class="mrp">Rs. 2,999</span></span>
+              <button class="add-cart" type="button" data-name="SonicAir Headphones" data-price="1899">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+        <article class="product">
+          <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80" alt="Leather handbag shopping card">
+          <div class="product-body">
+            <div class="product-meta"><span class="rating">4.3</span><span>912 ratings</span><span>New arrival</span></div>
+            <h3>Classic Travel Bag</h3>
+            <p>Premium everyday bag with spacious compartments and polished finish.</p>
+            <div class="mini-tags"><span>Fashion</span><span>Premium</span></div>
+            <div class="product-foot">
+              <span class="deal-price"><span class="product-price">Rs. 2,199</span><span class="mrp">Rs. 3,499</span></span>
+              <button class="add-cart" type="button" data-name="Classic Travel Bag" data-price="2199">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+        <article class="product">
+          <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=900&q=80" alt="Wireless earbuds product card">
+          <div class="product-body">
+            <div class="product-meta"><span class="rating">4.6</span><span>7,430 ratings</span><span>Hot deal</span></div>
+            <h3>NeoBuds Pro</h3>
+            <p>Compact earbuds with clear calls, quick pairing, and pocket charging case.</p>
+            <div class="mini-tags"><span>Audio</span><span>COD</span></div>
+            <div class="product-foot">
+              <span class="deal-price"><span class="product-price">Rs. 1,499</span><span class="mrp">Rs. 2,499</span></span>
+              <button class="add-cart" type="button" data-name="NeoBuds Pro" data-price="1499">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="storefront">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Storefront System</p>
+          <h2>Built Like A Real Shopping Platform</h2>
+        </div>
+      </div>
+      <div class="store-feature-grid">
+        <article class="panel store-feature">
+          <div class="feature-number">01</div>
+          <h3>Search & Categories</h3>
+          <p>Customers can search products, scan categories, compare prices, and quickly discover offers.</p>
+        </article>
+        <article class="panel store-feature">
+          <div class="feature-number">02</div>
+          <h3>Product Buying Flow</h3>
+          <p>Product cards include rating, stock, sale price, delivery tags, and add-to-cart actions.</p>
+        </article>
+        <article class="panel store-feature">
+          <div class="feature-number">03</div>
+          <h3>Cart & Order Review</h3>
+          <p>Buyers can adjust quantities, view discount, check total amount, and place an order enquiry.</p>
+        </article>
+        <article class="panel store-feature">
+          <div class="feature-number">04</div>
+          <h3>Business Conversion</h3>
+          <p>The layout is designed to make clients trust the store and contact you for their own website.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="checkout">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Secure Checkout</p>
+          <h2>Cart To Order Flow</h2>
+        </div>
+      </div>
+      <div class="checkout-suite">
+        <div class="checkout-grid">
+          <article class="panel">
+            <h3>Cart Summary</h3>
+            <div id="cartItems"></div>
+            <p class="cart-empty" id="cartEmpty">Your cart is empty. Add products to review the order total.</p>
+            <div class="cart-line"><span>Subtotal</span><strong id="subtotal">Rs. 0</strong></div>
+            <div class="cart-line"><span>Store Discount</span><strong id="discount">- Rs. 0</strong></div>
+            <div class="cart-line cart-total"><span>Total</span><strong id="total">Rs. 0</strong></div>
+          </article>
+          <article class="panel delivery-card">
+            <h3>Delivery Details</h3>
+            <div class="cart-line"><span>Customer</span><strong id="deliveryName">Mohammed Aaris</strong></div>
+            <div class="cart-line"><span>Phone</span><strong id="deliveryPhone">+91 72002 91544</strong></div>
+            <div class="cart-line"><span>Email</span><strong id="deliveryEmail">mohammedaaris02@gmail.com</strong></div>
+            <div class="cart-line"><span>Address</span><strong id="deliveryAddress">Chennai, Tamil Nadu, India</strong></div>
+            <div class="cart-line"><span>Delivery Slot</span><strong>Tomorrow, 10 AM - 2 PM</strong></div>
+            <div class="cart-line"><span>Shipping</span><strong>Free</strong></div>
+          </article>
+        </div>
+
+        <article class="panel">
+          <h3>Customer Details</h3>
+          <p>Enter buyer information manually before placing the order. These details update delivery and order history live.</p>
+          <div class="customer-form">
+            <label>
+              <span>Name</span>
+              <input id="customerName" value="Mohammed Aaris" autocomplete="name" aria-label="Customer name">
+            </label>
+            <label>
+              <span>Email ID</span>
+              <input id="customerEmail" type="email" value="mohammedaaris02@gmail.com" autocomplete="email" aria-label="Customer email">
+            </label>
+            <label>
+              <span>Phone Number</span>
+              <input id="customerPhone" type="tel" value="+91 72002 91544" autocomplete="tel" aria-label="Customer phone number">
+            </label>
+            <label>
+              <span>City</span>
+              <input id="customerCity" value="Chennai, Tamil Nadu" autocomplete="address-level2" aria-label="Customer city">
+            </label>
+            <label class="full">
+              <span>Full Address</span>
+              <textarea id="customerAddress" autocomplete="street-address" aria-label="Customer full address">Chennai, Tamil Nadu, India</textarea>
+            </label>
+          </div>
+        </article>
+
+        <div class="checkout-grid">
+          <article class="panel">
+            <h3>Payment Gateway</h3>
+            <p>Select a payment method like a real checkout screen. The order button updates the order history below.</p>
+            <div class="payment-grid" id="paymentMethods">
+              <button class="pay-option is-active" type="button" data-method="Card Payment">
+                <strong>Card Payment</strong>
+                <span>Visa, Mastercard, RuPay secure card checkout.</span>
+              </button>
+              <button class="pay-option" type="button" data-method="UPI Payment">
+                <strong>UPI Payment</strong>
+                <span>Google Pay, PhonePe, Paytm, BHIM ready flow.</span>
+              </button>
+              <button class="pay-option" type="button" data-method="Cash on Delivery">
+                <strong>Cash on Delivery</strong>
+                <span>Confirm order now and pay during delivery.</span>
+              </button>
+            </div>
+            <div class="payment-form">
+              <div class="payment-field"><span>Gateway</span><strong id="selectedGateway">Card Payment</strong></div>
+              <div class="payment-field"><span>Status</span><strong id="paymentStatus">Waiting for payment</strong></div>
+              <div class="payment-field"><span>Processing</span><strong id="processingMode">Card authorization</strong></div>
+              <div class="payment-field"><span>Receipt</span><strong>Email + WhatsApp</strong></div>
+            </div>
+            <div class="gateway-panel is-active" id="cardPanel">
+              <div class="gateway-live-form">
+                <label class="full">
+                  <span>Card Number</span>
+                  <input id="cardNumberInput" inputmode="numeric" maxlength="19" value="4821 8092 1145 8092" aria-label="Card number">
+                </label>
+                <label>
+                  <span>Card Holder</span>
+                  <input id="cardNameInput" value="MOHAMMED AARIS" aria-label="Card holder name">
+                </label>
+                <label>
+                  <span>Expiry</span>
+                  <input id="cardExpiryInput" maxlength="5" value="09/29" aria-label="Card expiry">
+                </label>
+                <label>
+                  <span>CVV</span>
+                  <input id="cardCvvInput" inputmode="numeric" maxlength="3" value="123" aria-label="Card CVV">
+                </label>
+                <label>
+                  <span>Amount</span>
+                  <input id="paymentAmountInput" readonly value="Rs. 0" aria-label="Payment amount">
+                </label>
+              </div>
+            </div>
+            <div class="gateway-panel" id="upiPanel">
+              <div class="gateway-live-form">
+                <label class="full">
+                  <span>UPI ID</span>
+                  <input id="upiInput" value="customer@upi" aria-label="UPI ID">
+                </label>
+                <label>
+                  <span>Provider</span>
+                  <input value="PhonePe / Google Pay / Paytm" readonly aria-label="UPI provider">
+                </label>
+                <label>
+                  <span>Verification</span>
+                  <input id="upiStatusInput" value="Ready to verify" readonly aria-label="UPI status">
+                </label>
+              </div>
+            </div>
+            <div class="gateway-panel" id="codPanel">
+              <div class="gateway-live-form">
+                <label class="full">
+                  <span>COD Confirmation</span>
+                  <input value="Pay during delivery after order confirmation" readonly aria-label="Cash on delivery confirmation">
+                </label>
+                <label>
+                  <span>OTP</span>
+                  <input value="Delivery OTP enabled" readonly aria-label="Delivery OTP enabled">
+                </label>
+                <label>
+                  <span>Cash Limit</span>
+                  <input value="Orders up to Rs. 25,000" readonly aria-label="Cash on delivery limit">
+                </label>
+              </div>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="card-preview" aria-label="Saved payment card preview">
+              <div class="card-preview-top">
+                <span class="card-chip"></span>
+                <strong id="cardBrand">ShopSphere Pay</strong>
+              </div>
+              <div class="card-number" id="cardPreviewNumber">4821 **** **** 8092</div>
+              <div class="card-preview-bottom">
+                <span id="cardPreviewName">MOHAMMED AARIS</span>
+                <span id="cardPreviewExpiry">09/29</span>
+              </div>
+            </div>
+            <div class="processing-steps" id="processingSteps">
+              <div class="process-step is-active">Payment details entered</div>
+              <div class="process-step">Gateway authorization</div>
+              <div class="process-step">Order confirmation</div>
+              <div class="process-step">Receipt generated</div>
+            </div>
+          </article>
+        </div>
+
+        <div class="checkout-grid">
+          <article class="panel">
+            <h3>Complete Purchase</h3>
+            <p>Billing details, delivery address, payment gateway, confirmation message, and order tracking are arranged like a real online store.</p>
+            <div class="checkout-actions">
+              <button class="btn primary" id="orderButton" type="button">Buy Now</button>
+              <a class="btn" href="../index.html#contact">Build My Store</a>
+            </div>
+            <p class="buy-status" id="buyStatus">Order request received. The store owner can connect this flow to WhatsApp, email, or payment gateway.</p>
+          </article>
+          <article class="panel">
+            <h3>Order History</h3>
+            <div class="order-history" id="orderHistory">
+              <div class="order-row">
+                <span class="order-dot"></span>
+                <div><strong>ORD-2048</strong><br><span>Sport Pro Collection delivered</span></div>
+                <small>Completed</small>
+              </div>
+              <div class="order-row">
+                <span class="order-dot"></span>
+                <div><strong>ORD-2051</strong><br><span>PulseFit Smart Watch in transit</span></div>
+                <small>Shipping</small>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="store-footer-panel">
+        <div class="store-footer-brand">
+          <div class="footer-brand-line"><span>SS</span> ShopSphere</div>
+          <p>Premium online shopping experience with product listing, cart flow, customer details, payment gateway, delivery summary, and live order history.</p>
+          <div class="store-trust">
+            <span>Secure Pay</span>
+            <span>Fast Delivery</span>
+            <span>Live Orders</span>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Store</h3>
+          <a href="#deals">Today Deals</a>
+          <a href="#products">Top Products</a>
+          <a href="#storefront">Storefront</a>
+          <a href="#checkout">Checkout</a>
+        </div>
+        <div class="footer-column">
+          <h3>Features</h3>
+          <span>Customer Details</span>
+          <span>Payment Gateway</span>
+          <span>Order History</span>
+          <span>Cart Quantity</span>
+        </div>
+        <div class="footer-cta">
+          <strong>Need a store like this?</strong>
+          <p>Build a clean e-commerce website with product pages, checkout flow, and business enquiry setup.</p>
+          <a class="btn primary" href="../index.html#contact">Build My Store</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ShopSphere concept by Mohammed Aaris. All Rights Reserved.</span>
+        <a href="#">Back to top</a>
+      </div>
+    </footer>
+  </main>
+  <script>
+    const cart = new Map();
+    const currency = new Intl.NumberFormat("en-IN");
+    const cartItems = document.getElementById("cartItems");
+    const cartEmpty = document.getElementById("cartEmpty");
+    const cartCount = document.getElementById("cartCount");
+    const subtotalEl = document.getElementById("subtotal");
+    const discountEl = document.getElementById("discount");
+    const totalEl = document.getElementById("total");
+    const heroCartTotal = document.getElementById("heroCartTotal");
+    const buyStatus = document.getElementById("buyStatus");
+    const orderButton = document.getElementById("orderButton");
+    const storeSearch = document.getElementById("storeSearch");
+    const searchInput = document.getElementById("searchInput");
+    const paymentMethods = document.getElementById("paymentMethods");
+    const selectedGateway = document.getElementById("selectedGateway");
+    const orderHistory = document.getElementById("orderHistory");
+    const paymentStatus = document.getElementById("paymentStatus");
+    const processingMode = document.getElementById("processingMode");
+    const paymentAmountInput = document.getElementById("paymentAmountInput");
+    const cardNumberInput = document.getElementById("cardNumberInput");
+    const cardNameInput = document.getElementById("cardNameInput");
+    const cardExpiryInput = document.getElementById("cardExpiryInput");
+    const cardCvvInput = document.getElementById("cardCvvInput");
+    const cardPreviewNumber = document.getElementById("cardPreviewNumber");
+    const cardPreviewName = document.getElementById("cardPreviewName");
+    const cardPreviewExpiry = document.getElementById("cardPreviewExpiry");
+    const cardBrand = document.getElementById("cardBrand");
+    const processingSteps = document.getElementById("processingSteps");
+    const customerName = document.getElementById("customerName");
+    const customerEmail = document.getElementById("customerEmail");
+    const customerPhone = document.getElementById("customerPhone");
+    const customerCity = document.getElementById("customerCity");
+    const customerAddress = document.getElementById("customerAddress");
+    const deliveryName = document.getElementById("deliveryName");
+    const deliveryEmail = document.getElementById("deliveryEmail");
+    const deliveryPhone = document.getElementById("deliveryPhone");
+    const deliveryAddress = document.getElementById("deliveryAddress");
+    const gatewayPanels = {
+      "Card Payment": document.getElementById("cardPanel"),
+      "UPI Payment": document.getElementById("upiPanel"),
+      "Cash on Delivery": document.getElementById("codPanel")
+    };
+    let activePaymentMethod = "Card Payment";
+    let currentTotal = 0;
+
+    function formatPrice(value) {
+      return `Rs. ${currency.format(value)}`;
+    }
+
+    function renderCart() {
+      const items = [...cart.values()];
+      const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const discount = subtotal >= 5000 ? 500 : 0;
+      const total = Math.max(subtotal - discount, 0);
+      const count = items.reduce((sum, item) => sum + item.qty, 0);
+      currentTotal = total;
+
+      cartEmpty.style.display = items.length ? "none" : "block";
+      cartCount.textContent = count;
+      subtotalEl.textContent = formatPrice(subtotal);
+      discountEl.textContent = `- ${formatPrice(discount)}`;
+      totalEl.textContent = formatPrice(total);
+      heroCartTotal.textContent = formatPrice(total);
+      paymentAmountInput.value = formatPrice(total);
+
+      cartItems.innerHTML = items.map((item) => `
+        <div class="cart-item">
+          <div>
+            <div class="cart-item-title">${item.name}</div>
+            <div class="cart-item-price">${formatPrice(item.price)} x ${item.qty}</div>
+          </div>
+          <div class="qty-control" aria-label="${item.name} quantity controls">
+            <button class="qty-btn" type="button" data-action="decrease" data-name="${item.name}">-</button>
+            <strong>${item.qty}</strong>
+            <button class="qty-btn" type="button" data-action="increase" data-name="${item.name}">+</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    document.querySelectorAll(".add-cart").forEach((button) => {
+      button.addEventListener("click", () => {
+        const name = button.dataset.name;
+        const price = Number(button.dataset.price);
+        const current = cart.get(name) || { name, price, qty: 0 };
+        cart.set(name, { ...current, qty: current.qty + 1 });
+        buyStatus.classList.remove("is-visible");
+        renderCart();
+        document.getElementById("checkout").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    function maskCardNumber(value) {
+      const digits = value.replace(/\D/g, "").slice(0, 16);
+      const first = digits.slice(0, 4).padEnd(4, "*");
+      const last = digits.slice(-4).padStart(4, "*");
+      return `${first} **** **** ${last}`;
+    }
+
+    function formatCardInput(value) {
+      return value.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
+    }
+
+    function updateCardPreview() {
+      cardNumberInput.value = formatCardInput(cardNumberInput.value);
+      cardPreviewNumber.textContent = maskCardNumber(cardNumberInput.value);
+      cardPreviewName.textContent = (cardNameInput.value || "CUSTOMER NAME").toUpperCase();
+      cardPreviewExpiry.textContent = cardExpiryInput.value || "MM/YY";
+      cardBrand.textContent = activePaymentMethod === "Card Payment" ? "ShopSphere Pay" : activePaymentMethod;
+    }
+
+    function setProcessingStep(index) {
+      processingSteps.querySelectorAll(".process-step").forEach((step, stepIndex) => {
+        step.classList.toggle("is-active", stepIndex <= index);
+      });
+    }
+
+    function getCustomerDetails() {
+      return {
+        name: customerName.value.trim() || "Customer",
+        email: customerEmail.value.trim() || "No email",
+        phone: customerPhone.value.trim() || "No phone",
+        city: customerCity.value.trim() || "No city",
+        address: customerAddress.value.trim() || "No address"
+      };
+    }
+
+    function updateDeliveryPreview() {
+      const customer = getCustomerDetails();
+      deliveryName.textContent = customer.name;
+      deliveryEmail.textContent = customer.email;
+      deliveryPhone.textContent = customer.phone;
+      deliveryAddress.textContent = customer.address;
+    }
+
+    [cardNumberInput, cardNameInput, cardExpiryInput, cardCvvInput].forEach((input) => {
+      input.addEventListener("input", () => {
+        paymentStatus.textContent = "Payment details editing";
+        setProcessingStep(0);
+        updateCardPreview();
+      });
+    });
+
+    [customerName, customerEmail, customerPhone, customerCity, customerAddress].forEach((input) => {
+      input.addEventListener("input", () => {
+        updateDeliveryPreview();
+        buyStatus.classList.remove("is-visible");
+      });
+    });
+
+    cartItems.addEventListener("click", (event) => {
+      const button = event.target.closest(".qty-btn");
+      if (!button) return;
+      const item = cart.get(button.dataset.name);
+      if (!item) return;
+      const nextQty = button.dataset.action === "increase" ? item.qty + 1 : item.qty - 1;
+      if (nextQty <= 0) {
+        cart.delete(item.name);
+      } else {
+        cart.set(item.name, { ...item, qty: nextQty });
+      }
+      buyStatus.classList.remove("is-visible");
+      renderCart();
+    });
+
+    orderButton.addEventListener("click", () => {
+      if (!cart.size) {
+        buyStatus.textContent = "Please add at least one product before placing the order.";
+        paymentStatus.textContent = "Cart required";
+        setProcessingStep(0);
+      } else {
+        const orderId = `ORD-${Math.floor(3000 + Math.random() * 6000)}`;
+        const productNames = [...cart.values()].map((item) => item.name).slice(0, 2).join(", ");
+        const customer = getCustomerDetails();
+        orderButton.disabled = true;
+        paymentStatus.textContent = "Processing payment";
+        processingMode.textContent = `${activePaymentMethod} started`;
+        buyStatus.textContent = "Payment gateway is authorizing the order...";
+        setProcessingStep(1);
+        setTimeout(() => {
+          paymentStatus.textContent = "Confirming order";
+          processingMode.textContent = "Inventory and delivery slot locked";
+          buyStatus.textContent = "Order confirmation is being generated...";
+          setProcessingStep(2);
+        }, 650);
+        setTimeout(() => {
+          paymentStatus.textContent = "Payment successful";
+          processingMode.textContent = `Paid ${formatPrice(currentTotal)}`;
+          setProcessingStep(3);
+          buyStatus.textContent = `${orderId} placed with ${activePaymentMethod}. Paid ${formatPrice(currentTotal)} and order is ready for customer confirmation.`;
+          orderHistory.insertAdjacentHTML("afterbegin", `
+            <div class="order-row">
+              <span class="order-dot"></span>
+              <div><strong>${orderId} - ${customer.name}</strong><br><span>${productNames || "New shopping order"} paid by ${activePaymentMethod}</span><br><span>${customer.phone} | ${customer.email}</span><br><span>${customer.address}</span></div>
+              <small>${formatPrice(currentTotal)}</small>
+            </div>
+          `);
+          orderButton.disabled = false;
+        }, 1300);
+      }
+      buyStatus.classList.add("is-visible");
+    });
+
+    paymentMethods.addEventListener("click", (event) => {
+      const option = event.target.closest(".pay-option");
+      if (!option) return;
+      paymentMethods.querySelectorAll(".pay-option").forEach((item) => item.classList.remove("is-active"));
+      option.classList.add("is-active");
+      activePaymentMethod = option.dataset.method;
+      selectedGateway.textContent = activePaymentMethod;
+      paymentStatus.textContent = "Waiting for payment";
+      processingMode.textContent = activePaymentMethod === "Card Payment" ? "Card authorization" : activePaymentMethod === "UPI Payment" ? "UPI verification" : "Delivery confirmation";
+      Object.entries(gatewayPanels).forEach(([method, panel]) => {
+        panel.classList.toggle("is-active", method === activePaymentMethod);
+      });
+      setProcessingStep(0);
+      updateCardPreview();
+      buyStatus.classList.remove("is-visible");
+    });
+
+    storeSearch.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const query = searchInput.value.trim();
+      buyStatus.classList.remove("is-visible");
+      document.getElementById("products").scrollIntoView({ behavior: "smooth", block: "start" });
+      if (query) {
+        searchInput.value = query;
+      }
+    });
+
+    renderCart();
+    updateCardPreview();
+    updateDeliveryPreview();
+  </script>
+</body>
+</html>

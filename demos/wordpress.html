@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arun Studio | WordPress Portfolio Website</title>
+  <link rel="icon" type="image/jpeg" href="../assets/hma-favicon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #182033;
+      --muted: #667085;
+      --cream: #fff8ef;
+      --paper: #ffffff;
+      --rose: #c8555c;
+      --plum: #4f2d7f;
+      --mint: #2f9d83;
+      --line: rgba(24, 32, 51, 0.12);
+      --shadow: 0 28px 80px rgba(79, 45, 127, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgba(79, 45, 127, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79, 45, 127, 0.035) 1px, transparent 1px),
+        radial-gradient(circle at 8% 12%, rgba(200, 85, 92, 0.14), transparent 30rem),
+        radial-gradient(circle at 92% 10%, rgba(47, 157, 131, 0.14), transparent 28rem),
+        radial-gradient(circle at 50% 80%, rgba(246, 191, 89, 0.16), transparent 30rem),
+        linear-gradient(135deg, #fffaf2, #f8f0ff 52%, #f2fffb);
+      background-size: 42px 42px, 42px 42px, auto, auto, auto, auto;
+      color: var(--ink);
+      font-family: Jost, system-ui, sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(120deg, transparent 0 42%, rgba(255, 255, 255, 0.36) 42% 44%, transparent 44%),
+        radial-gradient(circle at 20% 60%, rgba(255, 255, 255, 0.55), transparent 18rem);
+      pointer-events: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 248, 239, 0.82);
+      padding: 16px max(16px, calc((100% - 1180px) / 2));
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: Jost, system-ui, sans-serif;
+      font-size: 1.3rem;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-links a,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      padding: 0 16px;
+      font-weight: 900;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(200, 85, 92, 0.38);
+      background: #ffffff;
+      box-shadow: 0 16px 34px rgba(200, 85, 92, 0.14);
+      color: var(--rose);
+    }
+
+    .btn.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--rose), var(--plum));
+      color: #ffffff;
+    }
+
+    .btn:active,
+    .nav-links a:active {
+      transform: translateY(0) scale(0.97);
+      background: linear-gradient(135deg, #8f2f48, #33205e);
+      color: #ffffff;
+    }
+
+    .section {
+      position: relative;
+      padding: 82px 0;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 26px -16px;
+      z-index: -1;
+      border-radius: 36px;
+      background: rgba(255, 255, 255, 0);
+      transition: background 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .section:hover::before {
+      background: rgba(255, 255, 255, 0.32);
+      box-shadow: 0 30px 90px rgba(79, 45, 127, 0.08);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+      gap: 48px;
+      align-items: center;
+      min-height: calc(100vh - 76px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 16px;
+      color: var(--rose);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--rose), var(--plum));
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-family: Jost, system-ui, sans-serif;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 720px;
+      font-size: clamp(3.4rem, 7vw, 7rem);
+      line-height: 0.94;
+    }
+
+    h2 {
+      font-size: clamp(2.4rem, 4.6vw, 4.8rem);
+      line-height: 1;
+    }
+
+    .lead {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .profile-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow);
+      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-10px) rotate(-1deg);
+      border-color: rgba(200, 85, 92, 0.32);
+      box-shadow: 0 34px 90px rgba(200, 85, 92, 0.18);
+    }
+
+    .profile-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 4.6;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.5s ease;
+    }
+
+    .profile-card:hover img {
+      transform: scale(1.04);
+      filter: saturate(1.08) contrast(1.04);
+    }
+
+    .profile-meta {
+      display: grid;
+      gap: 12px;
+      padding: 24px;
+    }
+
+    .profile-meta strong {
+      font-size: 1.35rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .stat,
+    .card,
+    .work-card,
+    .post-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 20px 60px rgba(24, 32, 51, 0.08);
+    }
+
+    .stat {
+      padding: 18px;
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+    }
+
+    .stat:hover {
+      transform: translateY(-5px);
+      border-color: rgba(79, 45, 127, 0.28);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 240, 255, 0.92));
+    }
+
+    .stat strong {
+      color: var(--plum);
+      display: block;
+      font-size: 1.8rem;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      padding: 24px;
+      transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .card:hover,
+    .work-card:hover,
+    .post-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(200, 85, 92, 0.34);
+      background:
+        radial-gradient(circle at 16% 0%, rgba(200, 85, 92, 0.1), transparent 13rem),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 240, 255, 0.9));
+      box-shadow: 0 28px 70px rgba(79, 45, 127, 0.14);
+    }
+
+    .work-card img,
+    .post-card img {
+      transition: transform 0.5s ease, filter 0.5s ease;
+    }
+
+    .work-card:hover img,
+    .post-card:hover img {
+      transform: scale(1.05);
+      filter: saturate(1.12) contrast(1.05);
+    }
+
+    .card-icon {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(200, 85, 92, 0.14), rgba(79, 45, 127, 0.12));
+      color: var(--rose);
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .card h3,
+    .work-card h3,
+    .post-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+    }
+
+    .card p,
+    .work-card p,
+    .post-card p,
+    .testimonial p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .site-type-card {
+      min-height: 260px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .site-type-card::after {
+      content: "";
+      position: absolute;
+      right: -46px;
+      bottom: -46px;
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(200, 85, 92, 0.14), rgba(79, 45, 127, 0.12));
+    }
+
+    .site-type-card ul {
+      display: grid;
+      gap: 8px;
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-weight: 800;
+      line-height: 1.45;
+      position: relative;
+      z-index: 1;
+    }
+
+    .site-type-card li::before {
+      content: "✓";
+      color: var(--rose);
+      font-weight: 900;
+      margin-right: 8px;
+    }
+
+    .setup-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .setup-item {
+      border: 1px solid rgba(79, 45, 127, 0.14);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.78);
+      padding: 22px;
+      transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+    }
+
+    .setup-item:hover {
+      transform: translateY(-7px);
+      border-color: rgba(200, 85, 92, 0.34);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 248, 239, 0.9));
+    }
+
+    .setup-item span {
+      color: var(--rose);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+    }
+
+    .setup-item strong {
+      display: block;
+      margin: 8px 0;
+      font-size: 1.05rem;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .work-card {
+      overflow: hidden;
+      transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .work-card img,
+    .post-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    .work-body,
+    .post-body {
+      padding: 22px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tags span {
+      border: 1px solid rgba(79, 45, 127, 0.16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--plum);
+      padding: 7px 10px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .tags span:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, var(--rose), var(--plum));
+      color: #ffffff;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.86fr 1.14fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .cms-panel {
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: #1c2435;
+      color: #ffffff;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .cms-panel:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 34px 90px rgba(79, 45, 127, 0.24);
+    }
+
+    .cms-top {
+      display: flex;
+      gap: 7px;
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cms-top span {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--rose);
+    }
+
+    .cms-top span:nth-child(2) {
+      background: #f6bf59;
+    }
+
+    .cms-top span:nth-child(3) {
+      background: var(--mint);
+    }
+
+    .cms-content {
+      display: grid;
+      gap: 12px;
+      padding: 26px;
+    }
+
+    .cms-row {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 14px;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .cms-row:hover {
+      transform: translateX(6px);
+      border-color: rgba(246, 191, 89, 0.36);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .cms-row strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .cms-row span {
+      color: rgba(255, 255, 255, 0.64);
+      font-weight: 700;
+    }
+
+    .testimonial {
+      border: 1px solid rgba(200, 85, 92, 0.22);
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 248, 239, 0.82));
+      padding: 28px;
+      transition: transform 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .testimonial:hover {
+      transform: translateY(-8px);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 240, 255, 0.9));
+      box-shadow: 0 26px 70px rgba(200, 85, 92, 0.14);
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 18px;
+    }
+
+    .cta {
+      border-radius: 34px;
+      background:
+        linear-gradient(135deg, rgba(24, 32, 51, 0.92), rgba(79, 45, 127, 0.9)),
+        url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1300&q=80");
+      background-blend-mode: multiply;
+      background-position: center;
+      background-size: cover;
+      color: #ffffff;
+      padding: clamp(34px, 7vw, 70px);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.28s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-8px);
+      filter: saturate(1.08);
+      box-shadow: 0 34px 90px rgba(79, 45, 127, 0.22);
+    }
+
+    .cta .lead {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      padding: 30px 0 44px;
+      font-weight: 800;
+    }
+
+    .back-top-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      border: 1px solid rgba(79, 45, 127, 0.16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--plum);
+      padding: 0 16px;
+      font-weight: 900;
+      transition: transform 0.22s ease, background 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .back-top-btn::after {
+      content: "↑";
+      font-size: 1rem;
+      transition: transform 0.22s ease;
+    }
+
+    .back-top-btn:hover {
+      transform: translateY(-3px);
+      border-color: rgba(200, 85, 92, 0.36);
+      background: linear-gradient(135deg, var(--rose), var(--plum));
+      color: #ffffff;
+      box-shadow: 0 18px 42px rgba(79, 45, 127, 0.16);
+    }
+
+    .back-top-btn:hover::after {
+      transform: translateY(-3px);
+    }
+
+    .back-top-btn:active {
+      transform: translateY(0) scale(0.97);
+      background: linear-gradient(135deg, #8f2f48, #33205e);
+      color: #ffffff;
+    }
+
+    @media (max-width: 880px) {
+      .hero,
+      .split,
+      .work-grid,
+      .grid-3,
+      .grid-4,
+      .setup-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .section-head,
+      .footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="../index.html#projects"><span class="brand-mark">A</span> Arun Studio</a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#work">Portfolio</a>
+      <a href="#cms">CMS</a>
+      <a href="#wordpress-sites">Site Types</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <main class="site-shell">
+    <section class="hero section">
+      <div>
+        <p class="eyebrow">WordPress Portfolio Site</p>
+        <h1>Creative portfolio built with a premium CMS feel.</h1>
+        <p class="lead">Arun Studio is a sample WordPress portfolio website for a designer, developer, or freelancer. It includes editable sections, service pages, portfolio showcase, blog preview, reviews, and contact enquiry flow.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#work">View Portfolio</a>
+          <a class="btn" href="#contact">Start A Project</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>28+</strong><span>Projects</span></div>
+          <div class="stat"><strong>4.9</strong><span>Client Rating</span></div>
+          <div class="stat"><strong>CMS</strong><span>Editable Pages</span></div>
+        </div>
+      </div>
+      <article class="profile-card">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80" alt="Creative portfolio owner portrait">
+        <div class="profile-meta">
+          <strong>Arun Prakash</strong>
+          <p class="lead">WordPress designer creating portfolio websites, landing pages, and service websites for creators and small businesses.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" id="services">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Services</p>
+          <h2>Portfolio website sections.</h2>
+        </div>
+        <a class="btn" href="#cms">CMS Features</a>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <div class="card-icon">01</div>
+          <h3>Personal Brand Pages</h3>
+          <p>Hero profile, about section, skills, work process, and professional story arranged for client trust.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">02</div>
+          <h3>Project Showcase</h3>
+          <p>Portfolio cards with images, case study text, categories, tools used, and project outcome highlights.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">03</div>
+          <h3>WordPress CMS Setup</h3>
+          <p>Editable pages, media uploads, contact form, SEO basics, blog posts, and plugin-ready structure.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Portfolio</p>
+          <h2>Selected website work.</h2>
+        </div>
+      </div>
+      <div class="work-grid">
+        <article class="work-card">
+          <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1100&q=80" alt="Portfolio website design on laptop">
+          <div class="work-body">
+            <h3>Designer Portfolio</h3>
+            <p>Minimal portfolio for a UI designer with case studies, visual gallery, client review, and enquiry CTA.</p>
+            <div class="tags"><span>WordPress</span><span>Elementor</span><span>Portfolio</span></div>
+          </div>
+        </article>
+        <article class="work-card">
+          <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?auto=format&fit=crop&w=1100&q=80" alt="Business website project planning">
+          <div class="work-body">
+            <h3>Agency Landing Page</h3>
+            <p>Business landing page with service blocks, pricing preview, testimonial strip, and lead form flow.</p>
+            <div class="tags"><span>Landing Page</span><span>SEO</span><span>Contact Form</span></div>
+          </div>
+        </article>
+        <article class="work-card">
+          <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1100&q=80" alt="Creative workspace website portfolio">
+          <div class="work-body">
+            <h3>Photographer Website</h3>
+            <p>Gallery-first website with albums, booking request, blog previews, and mobile-friendly image layout.</p>
+            <div class="tags"><span>Gallery</span><span>Booking</span><span>Responsive</span></div>
+          </div>
+        </article>
+        <article class="work-card">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1100&q=80" alt="Consulting portfolio website project">
+          <div class="work-body">
+            <h3>Consultant Profile</h3>
+            <p>Professional profile website with achievements, service pages, appointment CTA, and article section.</p>
+            <div class="tags"><span>Profile</span><span>Blog</span><span>Leads</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="cms">
+      <div class="split">
+        <div>
+          <p class="eyebrow">WordPress CMS</p>
+          <h2>Editable website control.</h2>
+          <p class="lead">The portfolio is planned like a real WordPress site: pages can be edited, images can be uploaded, blog posts can be published, and contact enquiries can be managed from the dashboard.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#contact">Request WordPress Site</a>
+          </div>
+        </div>
+        <div class="cms-panel">
+          <div class="cms-top"><span></span><span></span><span></span></div>
+          <div class="cms-content">
+            <div class="cms-row"><strong>Pages</strong><span>Home, About, Portfolio, Services, Blog, Contact</span></div>
+            <div class="cms-row"><strong>Plugins</strong><span>Contact form, SEO, cache, gallery, security basics</span></div>
+            <div class="cms-row"><strong>Content</strong><span>Edit text, replace images, publish posts, manage media</span></div>
+            <div class="cms-row"><strong>Result</strong><span>Client-editable premium portfolio website</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="wordpress-sites">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">What WordPress Can Build</p>
+          <h2>More than a portfolio site.</h2>
+        </div>
+        <a class="btn" href="#contact">Build With WordPress</a>
+      </div>
+      <div class="grid-4">
+        <article class="card site-type-card">
+          <div class="card-icon">WP</div>
+          <h3>Portfolio Website</h3>
+          <p>Personal brand website for designers, developers, photographers, consultants, and freelancers.</p>
+          <ul>
+            <li>Profile and about pages</li>
+            <li>Work showcase</li>
+            <li>Blog and contact form</li>
+          </ul>
+        </article>
+        <article class="card site-type-card">
+          <div class="card-icon">BIZ</div>
+          <h3>Static Business Site</h3>
+          <p>Clean company website for services, about, testimonials, enquiry forms, and local business presence.</p>
+          <ul>
+            <li>Service pages</li>
+            <li>Lead enquiry flow</li>
+            <li>SEO-ready content</li>
+          </ul>
+        </article>
+        <article class="card site-type-card">
+          <div class="card-icon">WOO</div>
+          <h3>WooCommerce Store</h3>
+          <p>WordPress online store using WooCommerce for product listing, cart, checkout, and orders.</p>
+          <ul>
+            <li>Products and categories</li>
+            <li>Cart and checkout</li>
+            <li>Payment gateway setup</li>
+          </ul>
+        </article>
+        <article class="card site-type-card">
+          <div class="card-icon">LP</div>
+          <h3>Landing Page</h3>
+          <p>Conversion-focused page for campaigns, courses, services, products, and appointment booking.</p>
+          <ul>
+            <li>Hero and CTA sections</li>
+            <li>Offer and pricing blocks</li>
+            <li>WhatsApp/contact action</li>
+          </ul>
+        </article>
+      </div>
+      <div class="setup-strip">
+        <article class="setup-item">
+          <span>Domain</span>
+          <strong>Professional URL Setup</strong>
+          <p>Connect domain name, SSL certificate, redirects, and clean website links.</p>
+        </article>
+        <article class="setup-item">
+          <span>Hosting</span>
+          <strong>WordPress Hosting Setup</strong>
+          <p>cPanel, managed WordPress hosting, or cloud hosting based on site type.</p>
+        </article>
+        <article class="setup-item">
+          <span>Example</span>
+          <strong>This Layout Can Be WordPress</strong>
+          <p>The same sections can be built as editable WordPress pages with Elementor, plugins, and CMS dashboard.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid-3">
+        <article class="testimonial">
+          <p>"The site looks premium, loads fast, and my portfolio is easy to update without touching code."</p>
+          <strong>Riya Nair, Brand Designer</strong>
+        </article>
+        <article class="testimonial">
+          <p>"The service page and enquiry flow helped clients understand my work and contact me quickly."</p>
+          <strong>Arjun Mehta, Consultant</strong>
+        </article>
+        <article class="testimonial">
+          <p>"Clean WordPress setup, polished mobile design, and simple dashboard control for content updates."</p>
+          <strong>Naveen Studio</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="blog">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Blog Preview</p>
+          <h2>Editable article cards.</h2>
+        </div>
+      </div>
+      <div class="grid-3">
+        <article class="post-card">
+          <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=80" alt="Blog writing desk">
+          <div class="post-body"><h3>How I plan a portfolio website</h3><p>Content structure, project selection, visuals, and call-to-action planning.</p></div>
+        </article>
+        <article class="post-card">
+          <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=900&q=80" alt="Website design desktop">
+          <div class="post-body"><h3>What clients look for online</h3><p>Clear services, trust proof, case studies, and easy contact options.</p></div>
+        </article>
+        <article class="post-card">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="Website analytics laptop">
+          <div class="post-body"><h3>Why WordPress works for creators</h3><p>Edit pages, publish posts, upload images, and manage website content.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="cta">
+        <p class="eyebrow">Start A Project</p>
+        <h2>Need a WordPress site like this?</h2>
+        <p class="lead">Build a premium WordPress portfolio, business website, landing page, or WooCommerce store with domain setup, hosting setup, CMS editing, and enquiry-ready contact flow.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="../index.html#contact">Contact Mohammed Aaris</a>
+          <a class="btn" href="#work">View Work</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>&copy; 2026 Arun Studio. WordPress portfolio concept.</span>
+      <a class="back-top-btn" href="#">Back to top</a>
+    </footer>
+  </main>
+</body>
+</html>
