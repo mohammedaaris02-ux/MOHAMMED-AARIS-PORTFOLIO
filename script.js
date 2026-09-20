@@ -457,7 +457,7 @@ window.addEventListener("resize", scheduleNavUpdate, { passive: true });
 measureSections();
 updateNavState();
 
-whatsappButton.addEventListener("click", async () => {
+whatsappButton?.addEventListener("click", async () => {
   if (!contactForm.reportValidity()) {
     return;
   }
@@ -471,7 +471,7 @@ whatsappButton.addEventListener("click", async () => {
   showFormStatus("Your enquiry has been submitted. I will contact you soon.");
 });
 
-contactForm.addEventListener("submit", (event) => {
+contactForm?.addEventListener("submit", (event) => {
   event.preventDefault();
 
   if (!contactForm.reportValidity()) {
