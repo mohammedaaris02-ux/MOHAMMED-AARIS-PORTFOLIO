@@ -1978,7 +1978,9 @@ a.screen-card:hover::after {
     gap: 10px;
     width: calc(100% - 24px);
     max-width: calc(100% - 24px);
-    min-height: 58px;
+    min-height: 44px;
+    padding: 11px 18px;
+    border-radius: 999px;
     /* The preceding CTA already has a 12px bottom margin. */
     margin: 4px 12px 0;
     white-space: nowrap;
