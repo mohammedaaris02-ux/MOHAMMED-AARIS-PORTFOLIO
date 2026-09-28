@@ -385,7 +385,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 navLinks.addEventListener("click", (event) => {
-  if (event.target.matches("a")) {
+  if (event.target.closest("a")) {
     setMenuOpen(false);
   }
 });
