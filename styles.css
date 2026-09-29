@@ -1,4 +1,6 @@
 :root {
+  --content-width: 1160px;
+  --page-gutter: 16px;
   --surface: rgba(13, 20, 32, 0.74);
   --text: #f7fbff;
   --muted: #aab8c8;
@@ -9,7 +11,9 @@
   --shadow: 0 28px 90px rgba(0, 0, 0, 0.44);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -114,7 +118,7 @@ svg {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: min(1160px, calc(100% - 32px));
+  width: min(var(--content-width), calc(100% - 2 * var(--page-gutter)));
   min-height: 72px;
   margin: 0 auto;
 }
@@ -243,7 +247,7 @@ svg {
 }
 
 .section {
-  width: min(1160px, calc(100% - 32px));
+  width: min(var(--content-width), calc(100% - 2 * var(--page-gutter)));
   margin: 0 auto;
   padding: 96px 0;
 }
@@ -263,7 +267,7 @@ svg {
 
 .hero-content,
 .hero-panel,
-.terminal-card,
+.hero-feature-card,
 .metric-card {
   min-width: 0;
 }
@@ -413,7 +417,7 @@ h1::after {
   gap: 16px;
 }
 
-.terminal-card,
+.hero-feature-card,
 .metric-card,
 .card,
 .project-card,
@@ -427,7 +431,7 @@ h1::after {
   backdrop-filter: blur(18px);
 }
 
-.terminal-card,
+.hero-feature-card,
 .metric-card,
 .card,
 .project-card,
@@ -436,66 +440,53 @@ h1::after {
   padding: 24px;
 }
 
-.terminal-card {
+.hero-feature-card {
   background: linear-gradient(145deg, rgba(34, 230, 168, 0.14), rgba(77, 163, 255, 0.08)), rgba(12, 20, 31, 0.82);
 }
 
-.terminal-dots {
+.hero-window-dots {
   display: flex;
   gap: 7px;
   margin-bottom: 20px;
 }
 
-.terminal-dots span {
+.hero-window-dots span {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background: var(--accent);
 }
 
-.terminal-dots span:nth-child(2) {
+.hero-window-dots span:nth-child(2) {
   background: var(--accent-3);
 }
 
-.terminal-dots span:nth-child(3) {
+.hero-window-dots span:nth-child(3) {
   background: var(--accent-2);
 }
 
-.terminal-card p {
+.hero-feature-card p {
   margin: 0 0 10px;
   color: var(--accent);
   font-family: Consolas, "Courier New", monospace;
   font-weight: 800;
 }
 
-.terminal-code {
+.hero-code-line {
   position: relative;
   display: inline-block;
   width: 100%;
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
+  font-size: 0.94rem;
+  line-height: 1.45;
   text-overflow: ellipsis;
 }
 
-.terminal-code::after {
-  content: "";
-  display: inline-block;
-  width: 8px;
-  height: 1.05em;
-  margin-left: 6px;
-  vertical-align: -0.16em;
-  background: currentColor;
-  animation: cursorBlink 0.9s steps(2, start) infinite;
-}
 
-@keyframes cursorBlink {
-  50% {
-    opacity: 0;
-  }
-}
 
-.terminal-card strong {
+.hero-feature-card strong {
   display: block;
   font-size: clamp(1.35rem, 3vw, 2rem);
   line-height: 1.15;
@@ -512,7 +503,7 @@ h1::after {
 .card:hover,
 .project-card:hover,
 .metric-card:hover,
-.terminal-card:hover {
+.hero-feature-card:hover {
   transform: translateY(-6px);
   border-color: rgba(34, 230, 168, 0.48);
   background: linear-gradient(145deg, rgba(34, 230, 168, 0.12), rgba(77, 163, 255, 0.08)), var(--surface);
@@ -1753,7 +1744,6 @@ a.screen-card:hover::after {
 }
 
 .contact-section {
-  width: min(1220px, calc(100% - 32px));
   padding-top: 78px;
   scroll-margin-top: 92px;
 }
@@ -1797,6 +1787,7 @@ a.screen-card:hover::after {
 }
 
 .contact-info {
+  min-width: 0;
   display: grid;
   align-content: start;
   gap: 12px;
@@ -1857,6 +1848,7 @@ a.screen-card:hover::after {
 }
 
 .copy-contact strong {
+  overflow-wrap: anywhere;
   display: block;
   color: #f7fbff;
   font-size: 1rem;
@@ -2325,7 +2317,7 @@ textarea {
 .next-contact-section {
   width: 100%;
   margin: 0;
-  padding: 96px 16px 106px;
+  padding: 96px var(--page-gutter) 106px;
   border-top: 1px solid rgba(34, 230, 168, 0.14);
   background:
     radial-gradient(circle at 50% 25%, rgba(34, 230, 168, 0.15), transparent 34rem),
@@ -2336,7 +2328,9 @@ textarea {
 .next-contact-inner {
   display: grid;
   justify-items: center;
-  max-width: 920px;
+  width: 100%;
+  max-width: var(--content-width);
+  min-width: 0;
   margin: 0 auto;
   text-align: center;
 }
@@ -2349,6 +2343,7 @@ textarea {
 }
 
 .next-contact-inner h2 {
+  max-width: 920px;
   margin: 0;
   color: #f7fbff;
   font-size: clamp(3rem, 6.4vw, 5.25rem);
@@ -2371,7 +2366,7 @@ textarea {
 
 .next-contact-inner p {
   max-width: 640px;
-  margin: 16px 0 34px;
+  margin: 16px auto 34px;
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.7;
@@ -2454,7 +2449,7 @@ textarea {
 .footer {
   width: 100%;
   margin: 0;
-  padding: 50px 16px 24px;
+  padding: 50px var(--page-gutter) 24px;
   color: #b7c8d8;
   background:
     radial-gradient(circle at 16% 0%, rgba(34, 230, 168, 0.16), transparent 30rem),
@@ -2466,10 +2461,10 @@ textarea {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(300px, 1.15fr) minmax(140px, 0.5fr) minmax(190px, 0.68fr) minmax(270px, 0.86fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.5fr) minmax(0, 0.68fr) minmax(0, 0.86fr);
   gap: clamp(30px, 5.8vw, 76px);
   align-items: start;
-  width: min(1210px, 100%);
+  width: min(var(--content-width), 100%);
   margin: 0 auto;
   border-bottom: 1px solid rgba(214, 244, 255, 0.14);
   padding-bottom: 34px;
@@ -2542,6 +2537,7 @@ textarea {
 
 .footer-socials {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 26px;
 }
@@ -2734,7 +2730,7 @@ textarea {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  width: min(1210px, 100%);
+  width: min(var(--content-width), 100%);
   margin: 0 auto;
   padding-top: 28px;
 }
@@ -2885,7 +2881,7 @@ textarea {
   .contact-layout,
   .skills-stack,
   .list-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .about-photo-card {
@@ -2912,14 +2908,9 @@ textarea {
 }
 
 @media (max-width: 620px) {
-  .section {
-    width: min(100% - 28px, 1160px);
-    padding: 70px 0;
-  }
-
   .next-contact-section {
     width: 100%;
-    padding: 78px 18px 86px;
+    padding: 78px var(--page-gutter) 86px;
   }
 
   .next-contact-inner h2 {
@@ -2959,7 +2950,7 @@ textarea {
     width: 100%;
   }
 
-  .terminal-card,
+  .hero-feature-card,
   .metric-card,
   .card,
   .contact-info,
@@ -3015,10 +3006,6 @@ textarea {
 }
 
 @media (max-width: 1100px) {
-  .section {
-    width: min(100% - 36px, 1160px);
-  }
-
   .hero-grid {
     gap: 34px;
     grid-template-columns: minmax(0, 1fr) minmax(300px, 0.86fr);
@@ -3055,7 +3042,6 @@ textarea {
   }
 
   .nav {
-    width: min(100% - 28px, 1160px);
     min-height: 68px;
   }
 
@@ -3084,7 +3070,7 @@ textarea {
   .skills-stack,
   .list-grid,
   .footer-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero {
@@ -3112,12 +3098,12 @@ textarea {
     margin-inline: auto;
   }
 
-  .terminal-card,
+  .hero-feature-card,
   .metric-card {
     text-align: left;
   }
 
-  .terminal-code {
+  .hero-code-line {
     font-size: 0.86rem;
   }
 
@@ -3130,7 +3116,6 @@ textarea {
 
 @media (max-width: 620px) {
   .section {
-    width: min(100% - 24px, 1160px);
     padding: 64px 0;
   }
 
@@ -3138,10 +3123,6 @@ textarea {
     top: 8px;
     width: min(100% - 16px, 1280px);
     border-radius: 18px;
-  }
-
-  .nav {
-    width: min(100% - 22px, 1160px);
   }
 
   .brand {
@@ -3202,7 +3183,7 @@ textarea {
     min-height: 48px;
   }
 
-  .terminal-card,
+  .hero-feature-card,
   .metric-card,
   .card,
   .contact-info,
@@ -3210,18 +3191,18 @@ textarea {
     padding: 18px;
   }
 
-  .terminal-dots {
+  .hero-window-dots {
     margin-bottom: 16px;
   }
 
-  .terminal-code {
+  .hero-code-line {
     display: block;
     font-size: 0.74rem;
     line-height: 1.5;
     text-overflow: ellipsis;
   }
 
-  .terminal-card strong {
+  .hero-feature-card strong {
     font-size: clamp(1.45rem, 9vw, 2rem);
   }
 
@@ -3287,7 +3268,6 @@ textarea {
   }
 
   .contact-section {
-    width: min(100% - 24px, 1220px);
     padding-top: 62px;
   }
 
@@ -3371,16 +3351,11 @@ textarea {
 }
 
 @media (max-width: 380px) {
-  .section,
-  .contact-section {
-    width: min(100% - 18px, 1220px);
-  }
-
   h1 {
     font-size: clamp(2.65rem, 18vw, 3.45rem);
   }
 
-  .terminal-card,
+  .hero-feature-card,
   .metric-card,
   .card,
   .contact-form,
@@ -3429,17 +3404,6 @@ textarea {
     line-height: 1.22;
     overflow-wrap: normal;
     word-break: normal;
-  }
-
-  .next-contact-section {
-    width: 100%;
-    max-width: none;
-    padding-inline: 12px;
-    overflow: hidden;
-  }
-
-  .next-contact-inner {
-    width: min(100%, 620px);
   }
 
   .footer-link-list {
