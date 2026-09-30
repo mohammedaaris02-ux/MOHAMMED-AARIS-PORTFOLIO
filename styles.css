@@ -334,7 +334,6 @@ h1::after {
 
 .hero-badges,
 .hero-actions,
-.form-actions,
 .tag-grid,
 .footer-links {
   display: flex;
@@ -369,8 +368,7 @@ h1::after {
   box-shadow: 0 16px 30px rgba(34, 230, 168, 0.1);
 }
 
-.hero-actions,
-.form-actions {
+.hero-actions {
   gap: 14px;
   margin-top: 34px;
 }
@@ -422,7 +420,6 @@ h1::after {
 .card,
 .project-card,
 .contact-info,
-.contact-form,
 .list-grid div {
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -435,8 +432,7 @@ h1::after {
 .metric-card,
 .card,
 .project-card,
-.contact-info,
-.contact-form {
+.contact-info {
   padding: 24px;
 }
 
@@ -756,7 +752,6 @@ h1::after {
 .card-grid,
 .project-grid,
 .contact-layout,
-.contact-form,
 .contact-info {
   gap: 18px;
 }
@@ -2117,95 +2112,6 @@ a.screen-card:hover::after {
   stroke-width: 1.8;
 }
 
-.contact-form {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px 16px;
-  min-height: 0;
-  border-radius: 16px;
-  padding: 20px 24px;
-}
-
-.contact-form-head,
-.project-type,
-.privacy-note {
-  grid-column: 1 / -1;
-}
-
-.contact-form-head {
-  display: block;
-}
-
-.contact-form-head h3 {
-  margin: 0;
-  font-size: 1.12rem;
-}
-
-.contact-form-head p {
-  margin: 2px 0 0;
-  color: var(--muted);
-  font-size: 0.86rem;
-}
-
-.contact-form-head > span {
-  color: var(--muted);
-  font-size: 0.8rem;
-  font-weight: 800;
-}
-
-.project-type {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.project-type label {
-  display: inline-flex;
-}
-
-.project-type input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.project-type span {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--muted);
-  padding: 8px 14px;
-  font-size: 0.78rem;
-  font-weight: 800;
-}
-
-.project-type input:checked + span {
-  border-color: rgba(34, 230, 168, 0.8);
-  background: rgba(34, 230, 168, 0.12);
-  color: var(--text);
-}
-
-.contact-form label {
-  display: grid;
-  gap: 6px;
-}
-
-.hidden-field {
-  display: none !important;
-}
-
-.contact-form .full,
-.form-actions,
-.form-status {
-  grid-column: 1 / -1;
-}
-
-.contact-form span {
-  color: var(--muted);
-  font-size: 0.84rem;
-  font-weight: 800;
-}
-
 input,
 textarea {
   width: 100%;
@@ -2231,124 +2137,6 @@ textarea:focus {
 textarea {
   min-height: 82px;
   resize: vertical;
-}
-
-.message-count {
-  justify-self: end;
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 800;
-  margin-top: -4px;
-}
-
-.form-status {
-  display: none;
-  margin: -2px 0 0;
-  border: 1px solid rgba(34, 230, 168, 0.28);
-  border-radius: 8px;
-  background: rgba(34, 230, 168, 0.08);
-  color: var(--accent);
-  padding: 10px 12px;
-  font-size: 0.84rem;
-  font-weight: 800;
-  line-height: 1.4;
-}
-
-.form-status.show {
-  display: block;
-}
-
-.form-actions {
-  margin-top: 2px;
-}
-
-.send-message-btn {
-  position: relative;
-  gap: 10px;
-  width: 100%;
-  min-height: 48px;
-  overflow: hidden;
-  background: linear-gradient(120deg, #8752e8, #3787d8, #22c99b, #8752e8);
-  background-size: 280% 280%;
-  color: #061019;
-  font-weight: 950;
-  letter-spacing: 0;
-  box-shadow: 0 18px 42px rgba(34, 230, 168, 0.16);
-  animation: sendButtonGradient 5s ease infinite;
-}
-
-.send-message-btn::before {
-  content: "";
-  position: absolute;
-  inset: -70% auto -70% -30%;
-  width: 28%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.46), transparent);
-  transform: skewX(-18deg) translateX(-260%);
-  transition: transform 0.72s ease;
-}
-
-.send-message-btn span,
-.send-plane {
-  position: relative;
-  z-index: 1;
-}
-
-.send-message-btn span {
-  color: #061019;
-  text-shadow: none;
-  transition: transform 0.24s ease, color 0.24s ease;
-}
-
-.send-plane {
-  order: -1;
-  width: 21px;
-  height: 21px;
-  fill: none;
-  stroke: #061019;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2.2;
-  opacity: 1;
-  transform: translateX(0) rotate(-12deg) scale(1);
-  transition: stroke 0.24s ease, transform 0.24s ease;
-}
-
-.send-message-btn:hover,
-.send-message-btn:focus-visible {
-  transform: translateY(-2px);
-  color: #02070c;
-  box-shadow: 0 22px 52px rgba(77, 163, 255, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-}
-
-.send-message-btn:hover::before,
-.send-message-btn:focus-visible::before {
-  transform: skewX(-18deg) translateX(610%);
-}
-
-.send-message-btn:hover span,
-.send-message-btn:focus-visible span {
-  color: #02070c;
-  transform: translateX(4px);
-}
-
-.send-message-btn:hover .send-plane,
-.send-message-btn:focus-visible .send-plane {
-  stroke: #02070c;
-  transform: translateX(-4px) rotate(-12deg) scale(1.08);
-}
-
-.send-message-btn:active {
-  transform: translateY(0) scale(0.99);
-}
-
-.send-message-btn:active .send-plane {
-  animation: sendPlaneFly 0.42s ease;
-}
-
-.privacy-note {
-  margin: -4px 0 0;
-  color: var(--muted);
-  font-size: 0.78rem;
 }
 
 .next-contact-section {
@@ -2824,41 +2612,9 @@ textarea {
   }
 }
 
-@keyframes sendButtonGradient {
-  0% {
-    background-position: 0% 50%;
-  }
 
-  50% {
-    background-position: 100% 50%;
-  }
 
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
-@keyframes sendPlaneFly {
-  0% {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-
-  55% {
-    opacity: 0;
-    transform: translateX(18px) scale(1.12);
-  }
-
-  56% {
-    opacity: 0;
-    transform: translateX(-14px) scale(0.8);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -2971,8 +2727,7 @@ textarea {
   .card-grid,
   .project-grid,
   .about-details,
-  .experience-cards,
-  .contact-form {
+  .experience-cards {
     grid-template-columns: 1fr;
   }
 
@@ -2982,33 +2737,19 @@ textarea {
     grid-column: auto;
   }
 
-  .hero-actions .btn,
-  .form-actions .btn {
+  .hero-actions .btn {
     width: 100%;
   }
 
   .hero-feature-card,
   .metric-card,
   .card,
-  .contact-info,
-  .contact-form {
+  .contact-info {
     padding: 20px;
-  }
-
-  .contact-form {
-    gap: 9px;
-  }
-
-  .contact-form-head h3 {
-    font-size: 1.05rem;
   }
 
   textarea {
     min-height: 76px;
-  }
-
-  .send-message-btn {
-    min-height: 46px;
   }
 
   .project-card {
@@ -3223,8 +2964,7 @@ textarea {
   .hero-feature-card,
   .metric-card,
   .card,
-  .contact-info,
-  .contact-form {
+  .contact-info {
     padding: 18px;
   }
 
@@ -3351,11 +3091,6 @@ textarea {
     flex-wrap: wrap;
   }
 
-  .contact-form {
-    gap: 10px;
-    border-radius: 14px;
-  }
-
   input,
   textarea {
     font-size: 16px;
@@ -3395,7 +3130,6 @@ textarea {
   .hero-feature-card,
   .metric-card,
   .card,
-  .contact-form,
   .skill-panel,
   .project-content {
     padding: 16px;

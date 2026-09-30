@@ -2,16 +2,10 @@ const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector(".nav-links");
 const navItems = document.querySelectorAll(".nav-links a");
 const siteHeader = document.querySelector(".site-header");
-const contactForm = document.querySelector("#contactForm");
-const emailButton = document.querySelector("#emailButton");
-const whatsappButton = document.querySelector("#whatsappButton");
-const formStatus = document.querySelector("#formStatus");
 const liveBackground = document.querySelector("#liveBackground");
 const contactEmail = "mohammedaaris02@gmail.com";
 const copyEmailButtons = document.querySelectorAll("[data-copy-email]");
 const directMailLinks = document.querySelectorAll("[data-mail-link]");
-const messageInput = document.querySelector('#contactForm textarea[name="message"]');
-const messageCount = document.querySelector("#messageCount");
 const serviceButtons = document.querySelectorAll(".service-more");
 const serviceModal = document.querySelector("#serviceModal");
 const serviceModalImage = document.querySelector("#serviceModalImage");
@@ -221,71 +215,6 @@ const projectDetails = {
   },
 };
 
-const getContactData = () => {
-  const formData = new FormData(contactForm);
-  return {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    phone: formData.get("phone") || "",
-    subject: formData.get("subject") || "Website Contact",
-    message: formData.get("message"),
-  };
-};
-
-const buildMessage = () => {
-  const data = getContactData();
-  return `New Website Enquiry
-
-Name: ${data.name}
-Email: ${data.email}
-Phone / WhatsApp: ${data.phone}
-Project Title: ${data.subject}
-Message: ${data.message}`;
-};
-
-const saveContactMessage = async (data) => {
-  const isLocalServer = ["127.0.0.1", "localhost"].includes(window.location.hostname);
-
-  if (isLocalServer) {
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error("Local backend save failed");
-    }
-
-    return;
-  }
-
-  const formBody = new URLSearchParams({
-    "form-name": "contact",
-    name: data.name,
-    email: data.email,
-    phone: data.phone,
-    subject: data.subject,
-    message: data.message,
-  });
-
-  const response = await fetch("/", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: formBody.toString(),
-  });
-
-  if (!response.ok) {
-    throw new Error("Netlify form save failed");
-  }
-};
-
-const buildGmailUrl = () => {
-  const data = getContactData();
-  const subject = encodeURIComponent(data.subject || "Website Contact");
-  const body = encodeURIComponent(buildMessage());
-  return `https://mail.google.com/mail/?view=cm&fs=1&to=${contactEmail}&su=${subject}&body=${body}`;
-};
 
 const staticMailSubject = "Website Project Enquiry";
 const staticMailBody = "Hi Mohammed Aaris,\n\nI want to discuss a website project.";
@@ -297,38 +226,6 @@ const shouldUseDeviceMailApp = () => {
   return isSmallScreen || isTouchDevice;
 };
 
-let formStatusTimer = 0;
-
-const updateMessageCountValue = () => {
-  if (messageInput && messageCount) {
-    messageCount.textContent = String(messageInput.value.length);
-  }
-};
-
-const showFormStatus = (message) => {
-  if (!formStatus) {
-    return;
-  }
-
-  window.clearTimeout(formStatusTimer);
-  formStatus.textContent = message;
-  formStatus.classList.add("show");
-
-  formStatusTimer = window.setTimeout(() => {
-    formStatus.classList.remove("show");
-    formStatus.textContent = "";
-  }, 15000);
-};
-
-const openEmail = () => {
-  const data = getContactData();
-  const subject = encodeURIComponent(data.subject || "Website Contact");
-  const body = encodeURIComponent(buildMessage());
-  const mailtoUrl = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
-
-  formStatus.textContent = "Opening default mail app. Please press Send in your mail app.";
-  window.location.href = mailtoUrl;
-};
 
 const copyEmail = async (button) => {
   const email = button.dataset.copyEmail || contactEmail;
@@ -457,29 +354,6 @@ window.addEventListener("resize", scheduleNavUpdate, { passive: true });
 measureSections();
 updateNavState();
 
-whatsappButton?.addEventListener("click", async () => {
-  if (!contactForm.reportValidity()) {
-    return;
-  }
-
-  const data = getContactData();
-
-  const encodedMessage = encodeURIComponent(buildMessage());
-  window.open(`https://wa.me/919344646465?text=${encodedMessage}`, "_blank", "noopener");
-  contactForm.reset();
-  updateMessageCountValue();
-  showFormStatus("Your enquiry has been submitted. I will contact you soon.");
-});
-
-contactForm?.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  if (!contactForm.reportValidity()) {
-    return;
-  }
-
-  whatsappButton.click();
-});
 
 copyEmailButtons.forEach((button) => {
   button.addEventListener("click", () => copyEmail(button));
@@ -496,10 +370,6 @@ directMailLinks.forEach((link) => {
   });
 });
 
-if (messageInput && messageCount) {
-  messageInput.addEventListener("input", updateMessageCountValue);
-  updateMessageCountValue();
-}
 
 serviceButtons.forEach((button) => {
   button.addEventListener("click", () => {
