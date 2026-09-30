@@ -755,3 +755,11 @@ const startLiveBackground = () => {
 };
 
 startLiveBackground();
+
+document.querySelectorAll('.nav-whatsapp-cta, .mobile-header-whatsapp').forEach(link => link.addEventListener('keydown', (event) => {
+  if (event.code === 'Space') {
+    event.preventDefault();
+    if (!event.repeat) event.currentTarget.click();
+  }
+}));
+
