@@ -10,8 +10,9 @@
   let enquiry;
   let finalMessage = '';
   let currentStep = 0;
-  const stepNames = ['Customer Details','Project & Website Type','Design / Theme','Features','Pages & Website Setup','Preferred Consultation','Final Notes','Review & WhatsApp'];
-  const stepSections = [[0],[1,2],[3],[4],[5,6],[7]];
+  let reviewing = false;
+  const stepNames = ['Customer Details','Project Type','Website Type','Design / Theme','Features','Pages & Website Setup','Preferred Consultation','Final Notes & Review'];
+  const stepSections = [[0],[1],[2],[3],[4],[5,6],[7]];
   const stepKeys = [];
   const stepPanels = [];
   const storageKey = 'hma.projectEnquiry.v1';
@@ -184,14 +185,15 @@
   }
   function showStep(step, focus = true) {
     currentStep = Math.max(0, Math.min(7, step));
+    reviewing = currentStep === 7 && reviewing;
     stepPanels.forEach((panel,index) => { panel.hidden = index !== currentStep; });
-    form.hidden = currentStep === 7; review.hidden = currentStep !== 7;
-    document.querySelector('#enquiryStepActions').hidden = currentStep === 7;
-    document.querySelector('#enquiryReviewActions').hidden = currentStep !== 7;
+    form.hidden = reviewing; review.hidden = !reviewing;
+    document.querySelector('#enquiryStepActions').hidden = reviewing;
+    document.querySelector('#enquiryReviewActions').hidden = !reviewing;
     document.querySelector('#enquiryProgress').textContent = `Step ${currentStep + 1} of 8 - ${stepNames[currentStep]}`;
     document.querySelector('#enquiryProgressBar').value = currentStep + 1;
     document.querySelector('#enquiryBack').textContent = currentStep ? 'Back' : 'Cancel';
-    document.querySelector('#enquiryContinue').textContent = currentStep === 6 ? 'Review Enquiry' : 'Continue';
+    document.querySelector('#enquiryContinue').textContent = currentStep === 7 ? 'Review Enquiry' : 'Continue';
     document.querySelector('.enquiry-modal-body').scrollTop = 0;
     if (focus && root.open) document.querySelector('#enquiryProgress').focus({preventScroll:true});
     saveDraft();
@@ -199,16 +201,17 @@
   form.addEventListener('submit',event=>{
     event.preventDefault();
     if (!validate(stepKeys[currentStep] || [])) return;
-    if (currentStep === 6) {
+    if (currentStep === 7) {
       if (!validate()) return;
       renderReview();
+      reviewing = true;
     }
     showStep(currentStep + 1);
   });
-  document.querySelector('#enquiryEdit').addEventListener('click',()=>showStep(0));
+  document.querySelector('#enquiryEdit').addEventListener('click',()=>{ reviewing = false; showStep(7); });
   document.querySelector('#enquirySend').addEventListener('click',()=>{
     if (!enquiry || enquiry.appointment.date < tomorrow()) {
-      showStep(5); validate(stepKeys[5]); return;
+      showStep(6); validate(stepKeys[6]); return;
     }
     const whatsappUrl = `${destination.origin}${destination.pathname}?text=${encodeURIComponent(finalMessage)}`;
     window.open(whatsappUrl,'_blank','noopener,noreferrer');
@@ -229,12 +232,15 @@
     const values = {};
     controls.forEach(({control},key) => { values[key] = control.value; });
     ['features','pages'].forEach(key => { values[key] = [...form.querySelectorAll(`input[name="${key}"]:checked`)].map(input=>input.value); });
-    try { sessionStorage.setItem(storageKey,JSON.stringify({version:1,step:Math.min(currentStep,6),values})); } catch { /* In-memory edits still survive closing the modal. */ }
+    try {
+      if (!Object.values(values).some(value=>Array.isArray(value)?value.length:value.trim())) { sessionStorage.removeItem(storageKey); return; }
+      sessionStorage.setItem(storageKey,JSON.stringify({version:2,step:currentStep,values}));
+    } catch { /* In-memory edits still survive closing the modal. */ }
   }
   function restoreDraft() {
     try {
       const draft = JSON.parse(sessionStorage.getItem(storageKey));
-      if (!draft || draft.version !== 1 || !draft.values || typeof draft.values !== 'object') return;
+      if (!draft || ![1,2].includes(draft.version) || !draft.values || typeof draft.values !== 'object') return;
       controls.forEach(({control},key) => {
         if (typeof draft.values[key] === 'string') control.value = draft.values[key].slice(0,control.maxLength > 0 ? control.maxLength : 200);
       });
@@ -243,7 +249,7 @@
         form.querySelectorAll(`input[name="${key}"]`).forEach(input => { input.checked = selected.includes(input.value); });
       });
       form.querySelectorAll('.enquiry-multi').forEach(details => details.dispatchEvent(new Event('change')));
-      currentStep = Number.isInteger(draft.step) ? Math.max(0,Math.min(6,draft.step)) : 0;
+      currentStep = draft.version === 2 && Number.isInteger(draft.step) ? Math.max(0,Math.min(7,draft.step)) : 0;
     } catch { /* Ignore unavailable or malformed session storage. */ }
     toggleUrl(); updateDate();
   }
@@ -252,10 +258,31 @@
   form.addEventListener('change', saveDraft);
   showStep(currentStep, false);
 
+  const resetConfirmation = document.querySelector('#enquiryResetConfirmation');
+  const resetButton = document.querySelector('#enquiryReset');
+  function resetEnquiry() {
+    form.reset();
+    controls.forEach(({control,error})=>{ error.textContent=''; control.removeAttribute('aria-invalid'); });
+    form.querySelectorAll('.enquiry-multi').forEach(details=>{ details.open=false; details.dispatchEvent(new Event('change')); });
+    enquiry = undefined; finalMessage = ''; reviewing = false;
+    summary.replaceChildren(); status.textContent=''; resetConfirmation.hidden=true;
+    toggleUrl(); updateDate(); showStep(0);
+    try { sessionStorage.removeItem(storageKey); } catch { /* Storage may be unavailable. */ }
+  }
+  resetButton.addEventListener('click',()=>{
+    const hasData = [...controls.values()].some(({control})=>control.value.trim()) || form.querySelector('input:checked');
+    if (!hasData) { resetEnquiry(); return; }
+    resetConfirmation.hidden=false;
+    document.querySelector('.enquiry-modal-body').scrollTop=0;
+    document.querySelector('#enquiryResetCancel').focus();
+  });
+  document.querySelector('#enquiryResetCancel').addEventListener('click',()=>{resetConfirmation.hidden=true;resetButton.focus();});
+  document.querySelector('#enquiryResetConfirm').addEventListener('click',resetEnquiry);
+
   const opener = document.querySelector('#enquiryOpen');
   let previousFocus, scrollPosition = 0, oldOverflow = '', oldPadding = '', closeTimer;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  opener.addEventListener('click',()=>{
+  opener?.addEventListener('click',()=>{
     if (root.open) return;
     previousFocus = document.activeElement; scrollPosition = window.scrollY;
     oldOverflow = document.body.style.overflow; oldPadding = document.body.style.paddingRight;
@@ -266,7 +293,7 @@
   });
   function closeModal() {
     if (!root.open || root.classList.contains('is-closing')) return;
-    saveDraft(); root.classList.add('is-closing');
+    saveDraft(); resetConfirmation.hidden=true; root.classList.add('is-closing');
     closeTimer = setTimeout(()=>root.close(),reducedMotion.matches ? 0 : 220);
   }
   root.addEventListener('close',()=>{

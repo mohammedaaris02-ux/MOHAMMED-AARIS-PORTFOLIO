@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=final-portfolio-20260930-project-enquiry">
-  <link rel="stylesheet" href="enquiry.css?v=20260930-wizard">
+  <link rel="stylesheet" href="enquiry.css?v=20260930-contact-layout-v3">
 </head>
 <body>
   <canvas id="liveBackground" aria-hidden="true"></canvas>
@@ -584,18 +584,17 @@
             <a class="icon-link facebook-icon-link" href="https://www.facebook.com/mohammedaaris.dev" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><span class="icon-box" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.026 4.388 11.021 10.125 11.927v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.971h-1.513c-1.491 0-1.956.931-1.956 1.887v2.263h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.099 24 12.073Z"/></svg></span></a>
           </div>
         </div>
-      </div>
-      <div class="enquiry-preview">
-        <p class="eyebrow">PROJECT ENQUIRY</p>
-        <h3>Let's Plan Your Website</h3>
-        <p>Share your project requirements, preferred design, features, and consultation time.</p>
-        <ul class="enquiry-preview-features">
-          <li>Project Type</li><li>Design &amp; Features</li>
-          <li>Preferred Consultation</li><li>WhatsApp Enquiry</li>
-        </ul>
-        <button class="btn primary" id="enquiryOpen" type="button" aria-haspopup="dialog" aria-controls="projectEnquiry">Start Project Enquiry</button>
-        <p class="enquiry-hint">Takes only a few minutes.</p>
-        <noscript>Please enable JavaScript for the enquiry form, or use the WhatsApp contact link above.</noscript>
+        <div class="enquiry-preview">
+          <p class="eyebrow">PROJECT ENQUIRY</p>
+          <h3>Let's Plan Your Website</h3>
+          <p>Tell me about your project goals, preferred design style, required features, and your ideal time for a consultation.</p>
+          <ul class="enquiry-preview-features">
+            <li>Project Scope</li><li>Website Type &amp; Features</li><li>Design Preferences</li>
+            <li>Consultation Request</li><li>WhatsApp Enquiry</li>
+          </ul>
+          <button class="btn primary" id="enquiryOpen" type="button" aria-haspopup="dialog" aria-controls="projectEnquiry"><span>Start Project Enquiry</span><svg class="project-enquiry-arrow" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></button>
+          <p class="enquiry-hint">Quick, simple, and structured.</p>
+        </div>
       </div>
     </section>
 
@@ -709,12 +708,17 @@
     <header class="enquiry-modal-header">
       <div class="enquiry-title-row">
         <h2 id="enquiryDialogTitle">Project Enquiry</h2>
+        <button class="enquiry-close enquiry-reset" id="enquiryReset" type="button" aria-label="Reset enquiry" title="Reset enquiry">&#8635;</button>
         <button class="enquiry-close" id="enquiryClose" type="button" aria-label="Close project enquiry">&times;</button>
       </div>
       <p id="enquiryProgress" tabindex="-1" aria-live="polite">Step 1 of 8 - Customer Details</p>
       <progress id="enquiryProgressBar" max="8" value="1" aria-label="Enquiry progress"></progress>
     </header>
     <div class="enquiry-modal-body">
+      <div id="enquiryResetConfirmation" hidden role="group" aria-labelledby="enquiryResetQuestion">
+        <p id="enquiryResetQuestion">Reset this enquiry and start again?</p>
+        <div class="enquiry-actions"><button class="btn" id="enquiryResetCancel" type="button">Cancel</button><button class="btn primary" id="enquiryResetConfirm" type="button">Reset Enquiry</button></div>
+      </div>
       <form id="enquiryForm" novalidate>
         <div id="enquiryFields"></div>
         <div id="enquiryFinalNotes"></div>
@@ -737,6 +741,6 @@
       </div>
     </footer>
   </dialog>
-  <script src="enquiry.js?v=20260930-wizard" defer></script>
+  <script src="enquiry.js?v=20260930-enquiry-alignment-v2" defer></script>
 </body>
 </html>
