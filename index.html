@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=final-portfolio-20260930-project-enquiry">
-  <link rel="stylesheet" href="enquiry.css?v=20260930-contact-layout-v3">
+  <link rel="stylesheet" href="enquiry.css?v=20261003-email-only-v5">
 </head>
 <body>
   <canvas id="liveBackground" aria-hidden="true"></canvas>
@@ -724,9 +724,10 @@
         <div id="enquiryFinalNotes"></div>
       </form>
       <div id="enquiryReview" hidden>
-        <h3>PROJECT ENQUIRY SUMMARY</h3>
+        <h3>PROJECT ENQUIRY READY</h3>
+        <p class="enquiry-hint">Your project details are ready for review.</p>
+        <p class="enquiry-hint">Send your enquiry by email, or download a PDF copy for your records.</p>
         <div id="enquirySummary"></div>
-        <p class="enquiry-status" id="enquiryStatus" role="status" aria-live="polite"></p>
       </div>
     </div>
     <footer class="enquiry-modal-footer">
@@ -736,11 +737,14 @@
       </div>
       <div id="enquiryReviewActions" class="enquiry-actions" hidden>
         <button class="btn" id="enquiryEdit" type="button">Edit Details</button>
-        <button class="btn primary" id="enquirySend" type="button">Send Enquiry on WhatsApp</button>
+        <button class="btn primary" id="enquiryPdf" type="button">Download PDF</button>
+        <button class="btn primary" id="enquirySend" type="button">Send Enquiry</button>
         <button class="btn" id="enquiryCopy" type="button">Copy Enquiry</button>
+        <p class="enquiry-status" id="enquiryStatus" role="status" aria-live="polite"></p>
       </div>
     </footer>
   </dialog>
-  <script src="enquiry.js?v=20260930-enquiry-alignment-v2" defer></script>
+  <script src="enquiry-pdf.js?v=20261003-pdf-v1" defer></script>
+  <script src="enquiry.js?v=20261003-email-only-v5" defer></script>
 </body>
 </html>

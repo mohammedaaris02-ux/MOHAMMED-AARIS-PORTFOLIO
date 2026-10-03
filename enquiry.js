@@ -5,10 +5,10 @@
   const review = document.querySelector('#enquiryReview');
   const summary = document.querySelector('#enquirySummary');
   const status = document.querySelector('#enquiryStatus');
-  const destination = new URL(document.querySelector('.whatsapp-contact-cta').href);
   const estimate = 'Project scope, pricing, and delivery terms will be discussed during the consultation.';
   let enquiry;
   let finalMessage = '';
+  let pdfBusy = false;
   let currentStep = 0;
   let reviewing = false;
   const stepNames = ['Customer Details','Project Type','Website Type','Design / Theme','Features','Pages & Website Setup','Preferred Consultation','Final Notes & Review'];
@@ -177,11 +177,13 @@
     ].map(([title,lines])=>({title,lines:lines.filter(Boolean)}));
   }
   function renderReview() {
-    enquiry = readEnquiry(); const groups = buildGroups(enquiry);
+    const next = readEnquiry();
+    if (JSON.stringify(next) !== JSON.stringify(enquiry)) { enquiry = next; }
+    const groups = buildGroups(enquiry);
     finalMessage = 'NEW WEBSITE PROJECT ENQUIRY\n\n' + groups.map(group=>group.title+'\n'+(group.lines.join('\n') || 'Not specified')).join('\n\n') + '\n\nSent from Mohammed Aaris Portfolio';
     summary.replaceChildren();
     groups.forEach(group=>{const block=node('section','','enquiry-summary-group');block.append(node('h4',group.title),node('p',group.lines.join('\n') || 'Not specified'));summary.append(block);});
-    status.textContent = 'WhatsApp opens with your enquiry. Please review it and press Send in WhatsApp. Your consultation is not confirmed yet.';
+    setStatus('Please review your details. Your consultation is a request, not a confirmed appointment.');
   }
   function showStep(step, focus = true) {
     currentStep = Math.max(0, Math.min(7, step));
@@ -209,13 +211,68 @@
     showStep(currentStep + 1);
   });
   document.querySelector('#enquiryEdit').addEventListener('click',()=>{ reviewing = false; showStep(7); });
-  document.querySelector('#enquirySend').addEventListener('click',()=>{
-    if (!enquiry || enquiry.appointment.date < tomorrow()) {
-      showStep(6); validate(stepKeys[6]); return;
+  const sendButton = document.querySelector('#enquirySend');
+  const pdfButton = document.querySelector('#enquiryPdf');
+  const pdfActions = ['enquiryPdf','enquirySend','enquiryCopy','enquiryEdit','enquiryReset'].map(id=>document.getElementById(id));
+  let statusTimer;
+  function setStatus(message, temporary = false) {
+    clearTimeout(statusTimer);
+    status.textContent = message;
+    if (temporary) statusTimer = setTimeout(()=>{ status.textContent = ''; },5000);
+  }
+  function setBusy(busy) {
+    pdfBusy = busy;
+    pdfActions.forEach(button=>{ button.disabled = busy; });
+    document.querySelector('#enquiryReviewActions').setAttribute('aria-busy',String(busy));
+  }
+  sendButton.addEventListener('click',async()=>{
+    if (pdfBusy || !validate()) return;
+    renderReview();
+    setBusy(true);
+    sendButton.textContent = 'Sending...';
+    setStatus('Sending your enquiry...');
+    try {
+      const result = await window.EnquiryPdf.create(enquiry);
+      if (result.blob.type !== 'application/pdf' || result.blob.size > 2 * 1024 * 1024) throw new Error('Invalid PDF');
+      const bytes = new Uint8Array(await result.blob.arrayBuffer());
+      let binary = '';
+      for (let i = 0; i < bytes.length; i += 8192) binary += String.fromCharCode(...bytes.subarray(i,i + 8192));
+      const response = await fetch('/api/send-enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enquiry, pdf: { base64: btoa(binary), contentType: 'application/pdf', filename: result.filename } }),
+        signal: AbortSignal.timeout(25000)
+      });
+      const delivery = await response.json().catch(()=>({}));
+      if (!response.ok || delivery.ok !== true) throw new Error('Email failed');
+      setStatus('Your requirements were sent successfully. We\u2019ll contact you shortly.',true);
+    } catch {
+      setStatus('We couldn\u2019t send your enquiry. Please try again.');
+    } finally {
+      sendButton.textContent = 'Send Enquiry';
+      setBusy(false);
     }
-    const whatsappUrl = `${destination.origin}${destination.pathname}?text=${encodeURIComponent(finalMessage)}`;
-    window.open(whatsappUrl,'_blank','noopener,noreferrer');
-    status.textContent = 'Please press Send in WhatsApp to send your enquiry. If WhatsApp did not open or the message is incomplete, use Copy Enquiry and paste it into the existing WhatsApp chat.';
+  });
+  pdfButton.addEventListener('click',async()=>{
+    if (pdfBusy || !validate()) return;
+    renderReview();
+    setBusy(true);
+    pdfButton.textContent = 'Preparing PDF...';
+    setStatus('Preparing your enquiry PDF...');
+    try {
+      const result = await window.EnquiryPdf.create(enquiry);
+      const url = URL.createObjectURL(result.blob);
+      const download = node('a');
+      download.href = url; download.download = result.filename; download.hidden = true;
+      root.append(download); download.click(); download.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),60000);
+      setStatus('Project Enquiry PDF Ready. The download has started.');
+    } catch {
+      setStatus("We couldn't generate the PDF. Your enquiry details are safe. Please try again.");
+    } finally {
+      pdfButton.textContent = 'Download PDF';
+      setBusy(false);
+    }
   });
   document.querySelector('#enquiryCopy').addEventListener('click',async()=>{
     try {
@@ -224,8 +281,8 @@
         const copy=node('textarea');copy.value=finalMessage;copy.style.position='fixed';copy.style.opacity='0';root.append(copy);copy.select();
         const ok=document.execCommand('copy');copy.remove();if (!ok) throw new Error();
       }
-      status.textContent='Enquiry copied. Paste it into WhatsApp and press Send.';
-    } catch { status.textContent='Copy was unavailable. You can select and copy the review text above.'; }
+      setStatus('Enquiry copied.');
+    } catch { setStatus('Copy was unavailable. You can select and copy the review text above.'); }
   });
 
   function saveDraft() {
@@ -265,7 +322,8 @@
     controls.forEach(({control,error})=>{ error.textContent=''; control.removeAttribute('aria-invalid'); });
     form.querySelectorAll('.enquiry-multi').forEach(details=>{ details.open=false; details.dispatchEvent(new Event('change')); });
     enquiry = undefined; finalMessage = ''; reviewing = false;
-    summary.replaceChildren(); status.textContent=''; resetConfirmation.hidden=true;
+    pdfButton.textContent = 'Download PDF';
+    summary.replaceChildren(); setStatus(''); resetConfirmation.hidden=true;
     toggleUrl(); updateDate(); showStep(0);
     try { sessionStorage.removeItem(storageKey); } catch { /* Storage may be unavailable. */ }
   }
