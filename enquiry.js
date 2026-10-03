@@ -213,7 +213,7 @@
   document.querySelector('#enquiryEdit').addEventListener('click',()=>{ reviewing = false; showStep(7); });
   const sendButton = document.querySelector('#enquirySend');
   const pdfButton = document.querySelector('#enquiryPdf');
-  const pdfActions = ['enquiryPdf','enquirySend','enquiryCopy','enquiryEdit','enquiryReset'].map(id=>document.getElementById(id));
+  const pdfActions = ['enquiryPdf','enquirySend','enquiryEdit','enquiryReset'].map(id=>document.getElementById(id));
   let statusTimer;
   function setStatus(message, temporary = false) {
     clearTimeout(statusTimer);
@@ -273,16 +273,6 @@
       pdfButton.textContent = 'Download PDF';
       setBusy(false);
     }
-  });
-  document.querySelector('#enquiryCopy').addEventListener('click',async()=>{
-    try {
-      if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(finalMessage);
-      else {
-        const copy=node('textarea');copy.value=finalMessage;copy.style.position='fixed';copy.style.opacity='0';root.append(copy);copy.select();
-        const ok=document.execCommand('copy');copy.remove();if (!ok) throw new Error();
-      }
-      setStatus('Enquiry copied.');
-    } catch { setStatus('Copy was unavailable. You can select and copy the review text above.'); }
   });
 
   function saveDraft() {
